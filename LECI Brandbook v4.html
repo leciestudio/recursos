@@ -1,0 +1,1523 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LECI Brandbook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Open+Sans:ital,wght@0,300..800;1,400..700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* ─── LECI DESIGN SYSTEM v4 ─────────────────────────────────────────
+   Olive   #7A8A59  →  primario de marca
+   Ciruela #9C4A63  →  acento (C y punto del logo, palabra clave, dato final)
+   Charcoal #3D3D3D · Crema #E8E4DE · Negro #1C1C1C → neutros
+   Sin rosa y sin Cormorant desde v4.
+
+   Open Sans           → principal (títulos, cuerpo, subtítulos)
+   Bricolage Grotesque → acento (hooks, títulos web; una pieza = un acento)
+   Space Mono          → labels, datos, métricas
+──────────────────────────────────────────────────────────────────── */
+:root {
+  --olive:#7A8A59; --olive-deep:#5E6B43; --olive-soft:#A9BC7E; --olive-dim:rgba(122,138,89,0.09); --olive-tint:rgba(122,138,89,0.18);
+  --plum:#9C4A63; --plum-deep:#7A3349; --plum-soft:#C47A90; --plum-dim:rgba(156,74,99,0.08); --plum-tint:rgba(156,74,99,0.16);
+
+  --ink:#3D3D3D; --ink-mid:#4A4A44; --ink-light:#666352;
+  --cream:#E8E4DE; --cream-bg:#F1EFE9; --cream-pale:#F6F4EF; --surface:#FAFAF7;
+  --muted:#8A8A7A; --line:rgba(61,61,61,0.08); --line-med:rgba(61,61,61,0.14);
+
+
+  --f-body:'Open Sans', system-ui, sans-serif;
+  --f-accent:'Bricolage Grotesque', 'Open Sans', sans-serif;
+  --f-mono:'Space Mono', 'Courier New', monospace;
+
+  /* ── Motion ── */
+  --ease-suave:   cubic-bezier(.22,1,.36,1);   /* entradas */
+  --ease-preciso: cubic-bezier(.65,0,.35,1);   /* transiciones, wipes */
+  --ease-acento:  cubic-bezier(.34,1.56,.64,1);/* pops, stickers */
+  --ease-salida:  cubic-bezier(.55,0,1,.45);   /* salidas */
+  /* ritmo base LECI: calmo (×1,25 sobre la escala estándar) */
+  --d-micro:190ms; --d-ui:375ms; --d-entrada:875ms; --d-grafico:1250ms; --d-dato:1750ms; --stagger:110ms;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ink:#E8E4DE; --ink-mid:#C8C4BC; --ink-light:#B0AD9E; --cream:#2A2820; --cream-bg:#222018; --cream-pale:#1C1A14; --surface:#181610;
+    --muted:#8C8A78; --plum-soft:#A05570; --line:rgba(232,228,222,0.08); --line-med:rgba(232,228,222,0.14); --olive-deep:#A9BC7E; --plum:#B4607A; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"] {
+  --ink:#E8E4DE; --ink-mid:#C8C4BC; --ink-light:#B0AD9E; --cream:#2A2820; --cream-bg:#222018; --cream-pale:#1C1A14; --surface:#181610;
+  --muted:#8C8A78; --plum-soft:#A05570; --line:rgba(232,228,222,0.08); --line-med:rgba(232,228,222,0.14); --olive-deep:#A9BC7E; --plum:#B4607A; color-scheme:dark;
+}
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--cream-pale);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased}
+::selection{background:var(--plum);color:#fff}
+a{color:inherit;text-decoration:none}
+button,select,input,textarea{font:inherit;color:inherit}
+
+/* ─── LAYOUT ─── */
+.sidebar{position:fixed;top:0;left:0;bottom:0;width:214px;background:var(--cream-bg);border-right:.5px solid var(--line-med);display:flex;flex-direction:column;padding:28px 0 20px;z-index:100;overflow-y:auto}
+.sidebar-brand{padding:0 24px 20px;border-bottom:.5px solid var(--line);display:flex;flex-direction:column;gap:6px}
+.sidebar-wordmark{font-family:var(--f-accent);font-size:20px;font-weight:700;letter-spacing:5px;color:var(--olive)}
+.sidebar-sub{font-family:var(--f-mono);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
+.nav-sections{padding:14px 0;flex:1}
+.nav-section-label{padding:10px 24px 3px;font-family:var(--f-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);opacity:.6}
+.nav-item{display:block;padding:5px 24px;font-family:var(--f-mono);font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);border-left:2px solid transparent;transition:color .18s}
+.nav-item:hover{color:var(--ink)}
+.nav-item.active{color:var(--olive);border-left-color:var(--olive)}
+.main{margin-left:214px}
+.draft-bar{position:sticky;top:0;z-index:50;background:var(--plum-deep);color:#fff;font-family:var(--f-mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;padding:8px 64px;display:flex;gap:12px;align-items:center}
+.draft-bar i{width:6px;height:6px;border-radius:50%;background:#E8E4DE;display:inline-block}
+
+.bb-section{padding:72px 64px;border-bottom:.5px solid var(--line);max-width:1040px}
+.eyebrow{font-family:var(--f-mono);font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--olive);display:block;margin-bottom:12px}
+.section-title{font-family:var(--f-accent);font-weight:400;font-size:clamp(30px,3.6vw,48px);line-height:1;letter-spacing:-.035em;margin-bottom:16px;text-wrap:balance}
+.section-title em{font-style:normal;font-weight:800;color:var(--plum)}
+.section-intro{font-size:14px;color:var(--ink-light);max-width:62ch;line-height:1.78}
+.section-body{margin-top:40px}
+.sub{font-family:var(--f-mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin:36px 0 14px;display:flex;align-items:center;gap:10px}
+.sub::after{content:'';flex:1;height:.5px;background:var(--line-med)}
+.usage-note{padding:16px 20px;background:var(--cream-bg);border:.5px solid var(--line);border-left:2px solid var(--olive);margin-top:20px}
+.usage-note p{font-size:13px;color:var(--ink-light);line-height:1.72}
+.usage-note p+p{margin-top:6px}
+.usage-note strong{color:var(--ink);font-weight:600}
+.note-new{display:inline-block;font-family:var(--f-mono);font-size:9px;letter-spacing:1px;text-transform:uppercase;background:var(--plum-dim);color:var(--plum);border:.5px solid var(--plum-tint);padding:2px 7px;border-radius:20px;margin-left:8px;vertical-align:middle}
+
+.card{background:var(--cream-bg);border:.5px solid var(--line-med);border-radius:4px;padding:20px}
+.card h4{font-family:var(--f-mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-weight:400;margin-bottom:10px}
+.card p,.card li{font-size:13px;color:var(--ink-light);line-height:1.6}
+.card ul{list-style:none;display:flex;flex-direction:column;gap:6px}
+.card li::before{content:'·';color:var(--olive);font-weight:700;margin-right:8px}
+.g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.g3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.g4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+
+.btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border:.5px solid var(--line-med);border-radius:20px;background:var(--surface);font-family:var(--f-mono);font-size:10px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:background .2s,border-color .2s}
+.btn:hover{border-color:var(--olive);color:var(--olive-deep)}
+.btn.primary{background:var(--olive);border-color:var(--olive);color:#fff}
+.btn.primary:hover{background:var(--olive-deep);color:#fff}
+.btn.rec{background:var(--plum);border-color:var(--plum);color:#fff}
+
+.tbl{width:100%;border-collapse:collapse;font-size:13px}
+.tbl th{font-family:var(--f-mono);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);padding:9px 12px;text-align:left;border-bottom:.5px solid var(--line-med);font-weight:400}
+.tbl td{padding:10px 12px;border-bottom:.5px solid var(--line);color:var(--ink-mid);vertical-align:middle}
+.tbl code,.code{font-family:var(--f-mono);font-size:11px}
+.code{display:block;white-space:pre;overflow-x:auto;background:#1C1C1C;color:#E8E4DE;padding:18px 20px;border-radius:4px;line-height:1.7}
+.code .c{color:#8A8A7A}.code .k{color:#C5D69A}
+
+details.capcut{margin-top:10px;border:.5px solid var(--line-med);border-radius:4px;background:var(--surface)}
+details.capcut summary{cursor:pointer;padding:8px 12px;font-family:var(--f-mono);font-size:9.5px;letter-spacing:1px;text-transform:uppercase;color:var(--olive-deep);list-style:none;display:flex;justify-content:space-between}
+details.capcut summary::after{content:'+'}
+details.capcut[open] summary::after{content:'−'}
+details.capcut div{padding:4px 12px 12px;font-size:12px;color:var(--ink-light);line-height:1.6}
+details.capcut b{color:var(--ink);font-weight:600}
+details.capcut code{font-family:var(--f-mono);font-size:10.5px;background:var(--olive-dim);padding:1px 5px;border-radius:2px}
+
+/* ─── STAGES (motor de escenas) ─── */
+.demo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:18px}
+.demo-grid.wide{grid-template-columns:repeat(auto-fill,minmax(320px,1fr))}
+.demo{display:flex;flex-direction:column;gap:8px}
+.demo-head{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.demo-name{font-family:var(--f-mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink-mid)}
+.demo-actions{display:flex;gap:6px}
+.icon-btn{width:28px;height:28px;border-radius:50%;border:.5px solid var(--line-med);background:var(--surface);cursor:pointer;display:grid;place-items:center;font-size:12px;color:var(--ink-mid)}
+.icon-btn:hover{border-color:var(--olive);color:var(--olive)}
+.stage{position:relative;width:100%;overflow:hidden;border-radius:6px;background:#111;container-type:inline-size}
+.stage-inner{position:absolute;top:0;left:0;transform-origin:0 0;font-size:10px;overflow:hidden}
+.safe{position:absolute;inset:0;pointer-events:none;display:none;z-index:20}
+.stage.show-safe .safe{display:block}
+.safe i{position:absolute;background:rgba(156,74,99,.28);border:2px dashed rgba(255,255,255,.85)}
+.safe span{position:absolute;font:700 26px var(--f-mono);color:#fff;background:rgba(122,51,73,.85);padding:4px 12px;letter-spacing:1px}
+
+/* fondos */
+.bg{position:absolute;inset:0;background-size:cover;background-position:center}
+.bg-crema{background:#E8E4DE}
+.bg-papel{background-color:#EFEBE3;background-image:linear-gradient(rgba(61,61,61,.07) 2px,transparent 2px),linear-gradient(90deg,rgba(61,61,61,.07) 2px,transparent 2px);background-size:90px 90px}
+.bg-olive{background:radial-gradient(120% 80% at 25% 15%,#7C8C4C 0%,#55652F 45%,#2C3719 100%)}
+.bg-negro{background:#1C1C1C}
+.bg-foto{background:radial-gradient(60% 40% at 70% 30%,rgba(255,226,180,.35),transparent 70%),linear-gradient(160deg,#4a4339 0%,#2a2620 50%,#15130f 100%)}
+.bg-foto::after{content:'TU FOTO / VIDEO';position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);font:700 26px var(--f-mono);letter-spacing:4px;color:rgba(255,255,255,.12)}
+.bg-foto::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.15),rgba(0,0,0,.45))}
+.bg-azul{background:#0047BB}
+.bg-verde{background:#00B140}
+.bg-upload::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.1),rgba(0,0,0,.45))}
+.bg video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+
+/* paletas por fondo */
+.lt{--sc-ink:#3D3D3D;--sc-sub:#5C5A4C;--sc-key:#5E6B43;--hlb:#7A8A59;--hc1:#F6F4EF;--sc-mono:#8A8A7A;--plate:#FBFAF6;--plate-ink:#3D3D3D;--bar:#7A8A59;--bar2:#9C4A63}
+.dk{--sc-ink:#FFFFFF;--sc-sub:rgba(255,255,255,.74);--sc-key:#C9D99E;--hlb:#E8E4DE;--hc1:#4F5E30;--sc-mono:rgba(255,255,255,.55);--plate:#FBFAF6;--plate-ink:#3D3D3D;--bar:#A9BC7E;--bar2:#B85D78}
+.bgn-negro,.bgn-foto,.bgn-upload{--hlb:#7A8A59;--hc1:#FFFFFF}
+
+/* sistema de animación: .a + variables */
+.a{animation-name:var(--an,rise);animation-duration:calc(var(--t,700ms) * var(--k,1));animation-timing-function:var(--e,var(--ease-suave));animation-delay:calc(var(--d,0ms) * var(--k,1));animation-fill-mode:both}
+@keyframes rise{from{opacity:0;transform:translateY(46px)}}
+@keyframes up{from{transform:translateY(108%)}}
+@keyframes fade{from{opacity:0}}
+@keyframes pop{from{opacity:0;transform:scale(.4)}}
+@keyframes tagin{from{opacity:0;transform:translateY(30px) rotate(-8deg) scale(.9)}}
+@keyframes drop{from{opacity:0;transform:translateY(-140px) rotate(-9deg)}}
+@keyframes grow{from{transform:scaleY(0)}}
+@keyframes growx{from{transform:scaleX(0)}}
+@keyframes draw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+@keyframes clipin{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes nudge{0%,100%{transform:translateX(0)}50%{transform:translateX(14px)}}
+@keyframes hlbg{from{background-size:0% 100%;color:var(--sc-ink)}}
+@keyframes wipe{0%{transform:translateX(-101%)}42%,58%{transform:translateX(0)}100%{transform:translateX(101%)}}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(156,74,99,.6)}100%{box-shadow:0 0 0 40px rgba(156,74,99,0)}}
+.static .a,.static .hl,.static .iso *{animation:none!important}
+
+.sc{position:absolute;inset:0;padding:150px 96px 140px;display:flex;flex-direction:column;justify-content:space-between;color:var(--sc-ink);z-index:2}
+.f169 .sc{padding:90px 120px}
+.f11 .sc,.f45 .sc{padding:96px 90px}
+.sc-top{font:400 26px/1 var(--f-mono);letter-spacing:.18em;text-transform:uppercase;color:var(--sc-mono)}
+.sc-foot{display:flex;justify-content:space-between;align-items:center;font:400 26px var(--f-mono);color:var(--sc-mono)}
+.sc-foot .iso{width:84px}
+.wm{display:inline-block;overflow:hidden;vertical-align:top;padding:0 .02em .2em;margin-bottom:-.2em}
+.static .wm{overflow:visible}
+.wm>span{display:inline-block}
+.hl{background:linear-gradient(var(--hlb),var(--hlb)) no-repeat 0 0/100% 100%;color:var(--hc1);-webkit-box-decoration-break:clone;box-decoration-break:clone;padding:0 .14em;animation:hlbg calc(650ms * var(--k,1)) var(--ease-preciso) calc(var(--d,0ms) * var(--k,1)) both}
+
+/* hook */
+.h-pre{font:400 78px/1 var(--f-accent);letter-spacing:-.03em;color:var(--sc-ink)}
+.h-key{font:800 158px/.9 var(--f-accent);letter-spacing:-.045em;margin:14px 0 18px;color:var(--sc-ink)}
+.f169 .h-key{font-size:140px}
+.h-key:has(.hl){line-height:1.12}
+.h-post{font:400 66px/1.05 var(--f-accent);letter-spacing:-.03em;color:var(--sc-sub)}
+.h-tag{display:inline-block;margin-top:46px;background:var(--plate);color:var(--plate-ink);font:600 40px var(--f-body);padding:14px 26px;transform:rotate(-3deg);box-shadow:0 14px 30px rgba(0,0,0,.18)}
+
+/* nota con clip */
+.sc-note .sc-mid{display:flex;flex-direction:column;align-items:center}
+.note{position:relative;width:780px;max-width:100%;background:#FBFAF6;color:#3D3D3D;border-radius:22px;padding:80px 70px 74px;transform:rotate(-2.5deg);box-shadow:0 40px 80px rgba(0,0,0,.32);text-align:center}
+.note .clip{position:absolute;top:-58px;left:70px;width:62px}
+.n-eye{font:600 34px var(--f-body);text-transform:uppercase;letter-spacing:.04em;color:#5C5A4C}
+.n-key{font:800 136px/.92 var(--f-accent);letter-spacing:-.045em;margin:8px 0 10px}
+.n-post{font:400 46px/1.15 var(--f-body);color:#5C5A4C}
+.n-tag{margin-top:-24px;background:#FBFAF6;color:#3D3D3D;font:600 38px var(--f-body);padding:14px 28px;transform:rotate(3deg);box-shadow:0 18px 40px rgba(0,0,0,.28);position:relative;z-index:3}
+
+/* kpi */
+.kpi-lbl{font:400 32px var(--f-mono);letter-spacing:.2em;text-transform:uppercase;color:var(--sc-mono)}
+.kpi-big{font:800 330px/.85 var(--f-accent);letter-spacing:-.035em;color:var(--sc-ink);margin:24px 0 36px;font-variant-numeric:tabular-nums}
+.f169 .kpi-big{font-size:260px}
+.kpi-big small{font-size:.45em;letter-spacing:-.02em;color:var(--sc-key);margin-left:.06em}
+.pill{display:inline-flex;align-items:center;gap:14px;font:700 40px var(--f-body);padding:16px 30px;border-radius:60px;background:var(--hlb);color:var(--hc1)}
+.spark{width:100%;height:220px;margin-top:70px;overflow:visible}
+.spark path{fill:none;stroke:var(--bar);stroke-width:8;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1}
+
+/* barras */
+.ch-title{font:800 86px/.95 var(--f-accent);letter-spacing:-.04em}
+.ch-title span{color:var(--sc-key)}
+.bars{display:flex;align-items:flex-end;gap:26px;height:900px;border-bottom:3px solid var(--sc-mono);padding-top:80px}
+.f169 .bars,.f11 .bars,.f45 .bars{height:520px}
+.bar-w{flex:1;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;position:relative}
+.bar-v{font:700 34px var(--f-mono);color:var(--sc-ink);margin-bottom:14px}
+.bar-b{width:100%;background:var(--bar);border-radius:10px 10px 0 0;transform-origin:bottom}
+.bar-b.hi{background:var(--bar2)}
+.bar-l{position:absolute;bottom:-62px;font:400 28px var(--f-mono);color:var(--sc-mono)}
+/* línea */
+.line-svg{width:100%;height:auto;overflow:visible}
+.line-svg .ln{fill:none;stroke:var(--bar);stroke-width:10;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1}
+.line-svg .ar{fill:var(--bar);opacity:.16}
+.line-svg .gr{stroke:var(--sc-mono);stroke-width:2;opacity:.35}
+.end-dot{position:absolute;width:44px;height:44px;border-radius:50%;background:#9C4A63;border:8px solid var(--plate);transform:translate(-50%,-50%)}
+.end-dot.a{animation-name:pop,pulse;animation-duration:calc(500ms * var(--k,1)),1.6s;animation-delay:calc(var(--d) * var(--k,1)),calc(var(--d) * var(--k,1) + .5s);animation-iteration-count:1,infinite;animation-timing-function:var(--ease-acento),ease-out;animation-fill-mode:both,none}
+.end-val{position:absolute;transform:translate(-100%,-170%);font:800 80px var(--f-accent);letter-spacing:-.04em;white-space:nowrap}
+/* embudo */
+.fun{display:flex;flex-direction:column;gap:34px}
+.fun-row{display:grid;grid-template-columns:1fr;gap:12px}
+.fun-top{display:flex;justify-content:space-between;font:400 30px var(--f-mono);color:var(--sc-mono);text-transform:uppercase;letter-spacing:.1em}
+.fun-top b{font:800 46px var(--f-accent);color:var(--sc-ink);letter-spacing:-.02em;text-transform:none}
+.fun-track{height:96px;background:rgba(127,127,110,.14);border-radius:8px;overflow:hidden}
+.fun-bar{height:100%;background:var(--bar);border-radius:8px;transform-origin:left}
+.fun-bar.hi{background:var(--bar2)}
+/* lower third */
+.sc-lower{justify-content:flex-end}
+.lt-wrap{display:flex;align-items:flex-start;gap:24px}
+.lt-dot{width:30px;height:30px;border-radius:50%;background:#9C4A63;margin-top:36px}
+.lt-name{display:inline-block;background:#FBFAF6;color:#3D3D3D;font:800 84px/1 var(--f-accent);letter-spacing:-.035em;padding:20px 38px 24px}
+.lt-role{display:inline-block;background:#7A8A59;color:#F6F4EF;font:400 30px var(--f-mono);letter-spacing:.16em;text-transform:uppercase;padding:14px 38px}
+/* end card */
+.sc-end{align-items:center;text-align:center;justify-content:center;gap:60px}
+.sc-end .iso{width:340px}
+.end-q{font:800 118px/.92 var(--f-accent);letter-spacing:-.045em;max-width:900px}
+.cta{display:inline-flex;align-items:center;gap:20px;background:var(--hlb);color:var(--hc1);font:700 44px var(--f-body);padding:28px 50px;border-radius:80px}
+.cta i{font-style:normal;display:inline-block;animation:nudge 1.4s ease-in-out infinite}
+/* logo */
+.sc-logo{align-items:center;justify-content:center;text-align:center;gap:90px}
+.sc-logo .lk{width:800px}
+.f169 .sc-logo .lk{width:806px}
+.sc-logo .iso{width:670px}
+.f169 .sc-logo .iso{width:576px}
+.tagline{font:400 58px var(--f-accent);letter-spacing:-.02em;color:var(--sc-sub)}
+.f169 .tagline{font-size:46px}
+/* wipe */
+.wp{position:absolute;inset:0;z-index:3}
+.wp i{position:absolute;inset:0;transform:translateX(-101%)}
+.wp .w1{background:#7A8A59}.wp .w2{background:#E8E4DE}.wp .w3{background:#5E6B43}
+.wp .w4{inset:auto;left:50%;top:50%;width:70px;height:70px;margin:-35px;border-radius:50%;background:#9C4A63;transform:none}
+/* stickers */
+.sk{position:absolute}
+.sk-tag{background:#9C4A63;color:#fff;font:800 54px var(--f-accent);letter-spacing:-.02em;padding:16px 36px;border-radius:14px;transform:rotate(-6deg)}
+.sk-stamp{width:300px;height:300px}
+.sk-stamp svg{width:100%;height:100%;animation:spin 14s linear infinite}
+.sk-stamp text{font:700 21px var(--f-mono);letter-spacing:5px;fill:var(--sc-ink)}
+.sk-stamp b{position:absolute;inset:0;display:grid;place-items:center;font:800 64px var(--f-accent);color:var(--sc-key)}
+.sk-arrow{width:360px}
+.sk-arrow path{fill:none;stroke:var(--sc-ink);stroke-width:9;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1}
+.sk-swipe{background:var(--plate);color:var(--plate-ink);font:700 40px var(--f-body);padding:18px 34px;border-radius:60px;display:flex;gap:14px;align-items:center}
+.sk-swipe i{font-style:normal;animation:nudge 1.2s ease-in-out infinite}
+.sk-bars{display:flex;gap:10px;width:600px}
+.sk-bars span{flex:1;height:10px;border-radius:5px;background:rgba(127,127,110,.3);overflow:hidden}
+.sk-bars span i{display:block;height:100%;background:var(--sc-ink);transform-origin:left}
+.sk-paper{width:420px;padding:36px;background:#FBFAF6;color:#3D3D3D;transform:rotate(4deg);box-shadow:0 20px 40px rgba(0,0,0,.22);font:600 36px/1.25 var(--f-body)}
+.sk-paper .clip{position:absolute;top:-50px;right:50px;width:52px}
+/* subtítulos */
+.sc-cap{justify-content:flex-end;padding-bottom:520px;align-items:center;text-align:center}
+.f169 .sc-cap{padding-bottom:110px}
+.cap-line{font:800 70px/1.22 var(--f-body);letter-spacing:-.01em;max-width:900px}
+.cap-caja .cap-line span{background:#FBFAF6;color:#3D3D3D;padding:4px 14px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.cap-caja .cap-line span.on{background:#7A8A59;color:#fff}
+.cap-activa .cap-line span{color:#fff;text-shadow:0 3px 14px rgba(0,0,0,.55);transition:color .12s}
+.cap-activa .cap-line span.on{color:#C9D99E}
+.cap-line span.pre{opacity:0}
+
+/* logos vectoriales originales: isotipo (L y C olive, punto ciruela) y LECI Estudio (C y punto ciruela) */
+.iso,.lk{display:block;width:100%;height:auto;overflow:visible}
+.iso path,.lk path{transform-box:view-box}
+.iso .o,.lk .o{fill:#7A8A59}
+.iso.cream .o,.lk.cream .o{fill:#F6F4EF}
+.iso .d,.lk .c,.lk .d{fill:#9C4A63}
+.iso.anim .pl,.lk.anim .lL{animation:isoL calc(1000ms * var(--k,1)) var(--ease-preciso) calc(var(--d0,0ms) * var(--k,1)) both}
+.iso.anim .pc{transform-origin:101.5px 46.6px;animation:isoC calc(1100ms * var(--k,1)) var(--ease-suave) calc((var(--d0,0ms) + 350ms) * var(--k,1)) both}
+.iso.anim .pd{transform-origin:108.1px 47.3px;animation:isoD calc(600ms * var(--k,1)) var(--ease-acento) calc((var(--d0,0ms) + 1150ms) * var(--k,1)) both}
+.lk.anim .lE{animation:lkUp calc(700ms * var(--k,1)) var(--ease-suave) calc((var(--d0,0ms) + 200ms) * var(--k,1)) both}
+.lk.anim .lC{transform-origin:141px 38.5px;animation:isoC calc(1100ms * var(--k,1)) var(--ease-suave) calc((var(--d0,0ms) + 360ms) * var(--k,1)) both}
+.lk.anim .lI{animation:lkUp calc(700ms * var(--k,1)) var(--ease-suave) calc((var(--d0,0ms) + 520ms) * var(--k,1)) both}
+.lk.anim .lD{transform-origin:146.3px 38.7px;animation:isoD calc(600ms * var(--k,1)) var(--ease-acento) calc((var(--d0,0ms) + 1160ms) * var(--k,1)) both}
+.lk.anim .lS{transform-origin:100px 96.5px;animation:lkTrack calc(800ms * var(--k,1)) var(--ease-suave) calc((var(--d0,0ms) + 1520ms) * var(--k,1)) both}
+@keyframes isoL{from{clip-path:inset(0 100% 0 0);opacity:.2}to{clip-path:inset(0 0 0 0);opacity:1}}
+@keyframes isoC{from{opacity:0;transform:rotate(-140deg) scale(.7)}}
+@keyframes isoD{from{opacity:0;transform:scale(0)}}
+@keyframes lkUp{from{opacity:0;transform:translateY(10px)}}
+@keyframes lkTrack{from{opacity:0;transform:translateY(4px) scaleX(1.12)}}
+.static .iso *,.static .lk *{animation:none!important}
+
+/* ─── PORTADA ─── */
+#cover{min-height:92vh;display:flex;flex-direction:column;justify-content:center;max-width:none;position:relative;overflow:hidden}
+#cover::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 55% 50% at 88% 15%,rgba(122,138,89,.08),transparent 70%),radial-gradient(ellipse 40% 45% at 5% 88%,rgba(156,74,99,.05),transparent 70%);pointer-events:none}
+.cover-tag{font:400 10px var(--f-mono);letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:36px;display:flex;align-items:center;gap:10px}
+.cover-tag::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--plum)}
+.cover-logo{width:min(560px,100%);margin-bottom:34px}
+.cover-sub{font:400 clamp(20px,2.4vw,30px)/1.1 var(--f-accent);letter-spacing:-.03em;color:var(--ink-light);margin-bottom:18px}
+.cover-sub b{font-weight:800;color:var(--plum)}
+.cover-tagline{font:400 10px var(--f-mono);letter-spacing:3px;text-transform:uppercase;color:var(--ink-light);margin-bottom:36px}
+.cover-tagline span{color:var(--plum)}
+.cover-meta{display:flex;max-width:380px;border:.5px solid var(--line-med);border-radius:2px;overflow:hidden}
+.cover-meta div{flex:1;padding:12px 16px;border-right:.5px solid var(--line-med)}
+.cover-meta div:last-child{border-right:none}
+.cover-meta span{display:block;font:400 9px var(--f-mono);letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
+.cover-meta b{font:700 16px var(--f-accent)}
+.cover-replay{align-self:flex-start;margin-top:18px}
+.changelog{margin-top:36px;max-width:560px;padding:18px 22px;border:.5px solid var(--line-med);border-left:2px solid var(--plum);background:var(--cream-bg)}
+.changelog h4{font:400 10px var(--f-mono);letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.changelog ul{list-style:none;display:flex;flex-direction:column;gap:5px}
+.changelog li{font-size:13px;color:var(--ink-light)}
+.changelog li::before{content:'·';color:var(--plum);font-weight:700;margin-right:8px}
+.sidebar-footer{padding:14px 24px 0;border-top:.5px solid var(--line);font:400 9px/1.9 var(--f-mono);letter-spacing:1px;color:var(--muted);opacity:.7}
+
+/* ─── NOMBRE · POSICIONAMIENTO ─── */
+.nombre-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--line-med);border:.5px solid var(--line-med);margin-bottom:24px}
+.nombre-cell{background:var(--cream-pale);padding:26px 28px}
+.nombre-letter{font:400 56px/1 var(--f-accent);letter-spacing:-.03em;color:var(--olive);margin-bottom:6px}
+.nombre-letter.c{color:var(--plum)}
+.nombre-word{font:700 11px var(--f-body);letter-spacing:2px;text-transform:uppercase;margin-bottom:6px}
+.nombre-desc{font-size:13px;color:var(--ink-light);line-height:1.6}
+.claim-block{padding:40px 44px;background:radial-gradient(120% 120% at 15% 10%,#7C8C4C 0%,#55652F 55%,#3A4722 100%);border-radius:3px;position:relative;overflow:hidden}
+.claim-text{font:400 clamp(26px,3vw,40px)/1.05 var(--f-accent);letter-spacing:-.035em;color:#F6F4EF}
+.claim-text b{font-weight:800}
+.claim-attr{display:block;margin-top:16px;font:400 9px var(--f-mono);letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.5)}
+.pillar{padding:22px 20px;border:.5px solid var(--line-med);background:var(--cream-bg);border-radius:3px}
+.pillar-num{font:400 10px var(--f-mono);letter-spacing:2px;color:var(--olive);display:block;margin-bottom:6px}
+.pillar-title{font:800 22px var(--f-accent);letter-spacing:-.03em;margin-bottom:4px}
+.pillar-desc{font-size:13px;color:var(--ink-light);line-height:1.58}
+
+/* ─── LOGO ─── */
+.logo-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.logo-cell{border-radius:3px;padding:40px 20px 16px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;min-height:200px;border:.5px solid var(--line)}
+.logo-cell span{font:400 9px var(--f-mono);letter-spacing:1.5px;text-transform:uppercase;color:#8A8A7A}
+.protect-box{width:62%;outline:2px dashed rgba(156,74,99,.5);outline-offset:18px;margin:22px 0}
+.dont-row{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.dont{position:relative;background:var(--cream);border-radius:3px;min-height:130px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:16px 10px;overflow:hidden}
+.dont::after{content:'';position:absolute;top:10px;right:10px;width:18px;height:18px;border-radius:50%;background:var(--plum);-webkit-mask:linear-gradient(45deg,transparent 44%,#000 44%,#000 56%,transparent 56%),linear-gradient(-45deg,transparent 44%,#000 44%,#000 56%,transparent 56%);mask:linear-gradient(45deg,transparent 44%,#000 44%,#000 56%,transparent 56%),linear-gradient(-45deg,transparent 44%,#000 44%,#000 56%,transparent 56%)}
+.dont span{font:400 9px var(--f-mono);letter-spacing:1px;text-transform:uppercase;color:#5C5A4C;text-align:center}
+.dont>i,.dont .wrongcolor{display:flex;justify-content:center;width:100%}
+.wrongcolor .lk .c,.wrongcolor .lk .d{fill:#3F7CA8}.wrongcolor .lk .o{fill:#C9A23A}
+
+/* ─── COLOR ─── */
+.color-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.swatch{border:.5px solid var(--line);border-radius:3px;overflow:hidden;background:var(--cream-bg);display:flex;flex-direction:column;padding-bottom:12px}
+.swatch i{height:78px;margin-bottom:10px;border-bottom:.5px solid var(--line)}
+.swatch b{font:600 12px var(--f-body);padding:0 14px}
+.swatch code{font:400 10px var(--f-mono);color:var(--muted);padding:2px 14px}
+.swatch span{font-size:11px;color:var(--ink-light);padding:2px 14px;line-height:1.4}
+.ratio{display:flex;height:40px;border-radius:3px;overflow:hidden;margin-top:22px}
+.ratio i{display:flex;align-items:center;padding:0 12px;font:400 10px var(--f-mono);letter-spacing:1px;color:#fff;white-space:nowrap;font-style:normal}
+
+/* ─── GRAFISMO · DATOS ─── */
+.line-pattern{display:flex;gap:6px;align-items:flex-end;height:56px}
+.line-pattern i{width:3px;background:var(--olive);border-radius:2px;display:block}
+.dot-grid{display:grid;grid-template-columns:repeat(8,6px);gap:9px}
+.dot-grid i{width:6px;height:6px;border-radius:50%;background:var(--olive-tint)}
+.dot-grid i.on{background:var(--olive)}.dot-grid i.mid{background:var(--olive-soft)}.dot-grid i.p{background:var(--plum)}
+.kpis .kpi{padding:18px;background:var(--cream-bg);border:.5px solid var(--line-med);border-top:2px solid var(--olive);border-radius:2px;display:flex;flex-direction:column;gap:4px}
+.kpis .kpi.hi{border-top-color:var(--plum)}
+.kpi span{font:400 9px var(--f-mono);letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
+.kpi b{font:800 30px/1 var(--f-accent);letter-spacing:-.04em}
+.kpi em{font:400 10px var(--f-mono);font-style:normal;color:var(--olive-deep)}
+.kpi em.down{color:var(--plum)}
+.tm{font:700 15px var(--f-accent);letter-spacing:-.02em}
+.badge{display:inline-block;padding:2px 9px;border-radius:20px;font:400 10px var(--f-mono);background:var(--olive-dim);color:var(--olive-deep)}
+.badge.plum{background:var(--plum-dim);color:var(--plum)}
+.report-head{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:26px 30px;border-radius:4px}
+.report-head span{display:block;font:400 9px var(--f-mono);letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:6px}
+.report-head b{font:400 26px var(--f-accent);letter-spacing:-.03em;color:#F6F4EF}
+
+/* ─── VOZ · APLICACIONES ─── */
+.tono{padding:22px;border:.5px solid var(--line-med);border-radius:3px}
+.tono-l{font:400 9px var(--f-mono);letter-spacing:1.5px;text-transform:uppercase;color:var(--olive);display:flex;align-items:center;gap:6px}
+.tono-l::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--olive)}
+.tono-l.p{color:var(--plum)}.tono-l.p::before{background:var(--plum)}
+.tono-ex{font:400 18px/1.25 var(--f-accent);letter-spacing:-.02em;color:var(--ink);margin:10px 0 8px}
+.tono p:last-child{font-size:13px;color:var(--ink-light)}
+.vs-row{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:16px;margin-top:24px}
+.vs-col{display:flex;flex-direction:column;gap:8px}
+.vs-col h4{font:400 9px var(--f-mono);letter-spacing:2px;text-transform:uppercase}
+.vs-sep{font:400 11px var(--f-mono);color:var(--muted);padding-top:26px}
+.vs{padding:12px 16px;border-radius:2px;font-size:13px}
+.vs.no{background:var(--plum-dim);border:.5px solid var(--plum-tint);color:var(--ink-light);text-decoration:line-through;text-decoration-color:var(--plum)}
+.vs.si{background:var(--olive-dim);border:.5px solid var(--olive-tint)}
+.app{border:.5px solid var(--line-med);border-radius:4px;padding:18px;background:var(--cream-bg)}
+.app h4{font:400 9px var(--f-mono);letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+.bcard{aspect-ratio:85/55;border-radius:4px;padding:20px 22px;display:flex;flex-direction:column;justify-content:space-between;color:#F6F4EF}
+.bcard b{display:block;font:700 20px var(--f-accent);letter-spacing:-.02em}
+.bcard span{font:400 9px var(--f-mono);letter-spacing:1px;text-transform:uppercase;opacity:.6}
+.bcard-foot{display:flex;justify-content:space-between;align-items:flex-end;gap:10px}
+.bcard code{font:400 10px/1.7 var(--f-mono);opacity:.75}
+.ig{background:var(--surface);border-radius:4px;padding:16px;border:.5px solid var(--line)}
+.ig-top{display:flex;gap:14px;align-items:center}
+.ig-top img{width:72px;height:72px;border-radius:50%}
+.ig-top b{display:block;font:700 14px var(--f-body)}
+.ig-top span{font-size:12px;color:var(--ink-light);line-height:1.45}
+.ig-hl{display:flex;gap:12px;margin-top:16px;flex-wrap:wrap}
+.ig-hl figure{display:flex;flex-direction:column;align-items:center;gap:4px;margin:0}
+.ig-hl img{width:52px;height:52px;border-radius:50%;border:2px solid var(--surface);box-shadow:0 0 0 1px var(--line-med)}
+.ig-hl figcaption{font-size:10px;color:var(--ink-light)}
+.sig{display:flex;align-items:center;gap:16px;padding:18px 20px;background:var(--surface);border-radius:4px;border:.5px solid var(--line)}
+.sig>div{border-left:2px solid var(--olive);padding-left:16px;display:flex;flex-direction:column;gap:2px}
+.sig b{font:700 16px var(--f-accent);letter-spacing:-.02em}
+.sig span{font-size:12px;color:var(--ink-light)}
+.sig code{font:400 10px var(--f-mono);color:var(--plum)}
+
+.feed-layout{display:grid;grid-template-columns:minmax(0,520px) minmax(200px,1fr);gap:28px;align-items:start}
+@media (max-width:1100px){.feed-layout{grid-template-columns:minmax(0,1fr)}}
+
+/* ─── DESCARGAS ─── */
+#dl{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
+.dl{border:.5px solid var(--line-med);border-radius:4px;background:var(--cream-bg);padding:18px;display:flex;flex-direction:column;gap:14px}
+.dl-head{display:flex;gap:14px;align-items:flex-start}
+.dl-prev{width:96px;aspect-ratio:16/9;object-fit:contain;background:#E8E4DE;border-radius:3px;flex-shrink:0}
+.dl h3{font:800 18px var(--f-accent);letter-spacing:-.03em}
+.dl h3 span{font:400 9px var(--f-mono);letter-spacing:1px;color:var(--muted);text-transform:uppercase;margin-left:6px}
+.dl p{font-size:12px;color:var(--ink-light);line-height:1.5;margin:4px 0}
+.dl code{font:400 10px var(--f-mono);color:var(--olive-deep)}
+.dl audio{width:100%;height:32px;margin-top:8px}
+.dl-files{display:flex;flex-wrap:wrap;gap:6px}
+.dl-files a{font:400 10px var(--f-mono);padding:4px 9px;border:.5px solid var(--line-med);border-radius:20px;background:var(--surface);transition:border-color .2s}
+.dl-files a:hover{border-color:var(--olive);color:var(--olive-deep)}
+.dl-thumbs{display:grid;grid-template-columns:repeat(auto-fill,minmax(52px,1fr));gap:6px}
+.dl-thumbs a{aspect-ratio:1;border-radius:3px;overflow:hidden;background:var(--surface);border:.5px solid var(--line);display:grid;place-items:center}
+.dl-thumbs img{width:100%;height:100%;object-fit:contain}
+.dl-thumbs.checker a{background:repeating-conic-gradient(#d9d5ce 0 25%,#efece6 0 50%) 0 0/12px 12px}
+
+/* ─── TIPOGRAFÍA ─── */
+.role-card{border:.5px solid var(--line-med);border-radius:4px;overflow:hidden;background:var(--surface)}
+.role-spec{padding:26px 22px;min-height:150px;display:flex;align-items:flex-end;background:#1C1C1C;color:#fff}
+.role-info{padding:14px 18px 16px;border-top:.5px solid var(--line-med)}
+.role-info b{display:block;font-size:13px;font-weight:600;color:var(--ink)}
+.role-info span{font-size:12px;color:var(--ink-light)}
+.role-pct{float:right;font-family:var(--f-mono);font-size:10px;color:var(--olive-deep)}
+.tester{display:grid;grid-template-columns:260px minmax(0,1fr);gap:20px;align-items:start}
+.tester-ctl{display:flex;flex-direction:column;gap:12px}
+.tester-ctl label{font-family:var(--f-mono);font-size:9.5px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);display:flex;flex-direction:column;gap:6px}
+.tester-ctl input[type=text],.tester-ctl select,.ctl input[type=text],.ctl select,.ctl textarea{padding:8px 10px;border:.5px solid var(--line-med);border-radius:3px;background:var(--surface);font-family:var(--f-body);font-size:13px;text-transform:none;letter-spacing:0;color:var(--ink)}
+input[type=range]{accent-color:var(--olive)}
+.tester-out{background:#1C1C1C;border-radius:4px;padding:36px;min-height:260px;display:flex;flex-direction:column;justify-content:space-between;gap:20px;color:#fff;overflow:hidden}
+.tester-css{font-family:var(--f-mono);font-size:11px;color:#A9BC7E;word-break:break-all}
+
+/* ─── MOTION ─── */
+.curve-card{border:.5px solid var(--line-med);border-radius:4px;padding:18px;background:var(--surface);cursor:pointer}
+.curve-card svg{width:100%;height:auto;display:block}
+.curve-card .track{height:28px;position:relative;margin-top:12px;border-top:.5px dashed var(--line-med)}
+.curve-card .ball{position:absolute;top:8px;left:0;width:14px;height:14px;border-radius:50%;background:var(--olive)}
+.curve-card h5{font-family:var(--f-accent);font-size:20px;font-weight:700;letter-spacing:-.02em;margin-top:6px}
+.curve-card code{font-family:var(--f-mono);font-size:10px;color:var(--muted)}
+.curve-card p{font-size:12px;color:var(--ink-light);margin-top:6px;line-height:1.5}
+.dur-row{display:grid;grid-template-columns:120px 70px minmax(0,1fr) 180px;gap:14px;align-items:center;padding:10px 0;border-bottom:.5px solid var(--line)}
+.dur-row code{font-family:var(--f-mono);font-size:11px;color:var(--olive-deep)}
+.dur-row b{font-family:var(--f-mono);font-size:11px;font-weight:400;color:var(--ink)}
+.dur-row span{font-size:12px;color:var(--ink-light)}
+.dur-bar{height:6px;background:var(--olive-dim);border-radius:3px;overflow:hidden}
+.dur-bar i{display:block;height:100%;background:var(--olive);border-radius:3px;width:0}
+.principle{padding:22px;border:.5px solid var(--line-med);border-radius:4px;background:var(--cream-bg)}
+.principle .n{font-family:var(--f-mono);font-size:10px;color:var(--olive-soft);letter-spacing:2px}
+.principle h5{font-family:var(--f-accent);font-weight:800;font-size:26px;letter-spacing:-.03em;margin:6px 0}
+.principle p{font-size:13px;color:var(--ink-light);line-height:1.6}
+
+/* ─── HOOKS / PORTADAS ─── */
+.hook-card{border:.5px solid var(--line-med);border-radius:4px;padding:18px;background:var(--surface);display:flex;flex-direction:column;gap:8px}
+.hook-card .ty{font-family:var(--f-mono);font-size:9.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--plum)}
+.hook-card .ex{font-family:var(--f-accent);font-size:22px;line-height:1.05;letter-spacing:-.03em}
+.hook-card .ex b{font-weight:800}
+.hook-card .ex span{font-weight:400}
+.hook-card .fm{font-family:var(--f-mono);font-size:10.5px;color:var(--olive-deep);background:var(--olive-dim);padding:6px 8px;border-radius:2px}
+.hook-card p{font-size:12px;color:var(--ink-light);line-height:1.5;flex:1}
+.feed{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:3px;max-width:520px;background:var(--surface);padding:3px;border:.5px solid var(--line-med)}
+.feed .cell{position:relative;aspect-ratio:3/4;overflow:hidden}
+.feed .cell .stage{position:absolute;left:0;top:50%;transform:translateY(-50%);border-radius:0}
+.feed.full .cell{aspect-ratio:9/16}
+.cover-wrap{position:relative}
+.crop34{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);aspect-ratio:3/4;border:2px dashed #9C4A63;pointer-events:none;z-index:30}
+.crop34 span{position:absolute;top:-24px;left:0;font:700 10px var(--f-mono);color:var(--plum);letter-spacing:1px}
+
+/* ─── VIDEO KIT ─── */
+.fmt-row{display:flex;gap:18px;align-items:flex-end;flex-wrap:wrap}
+.fmt{display:flex;flex-direction:column;gap:8px;align-items:flex-start}
+.fmt i{display:block;background:var(--olive-dim);border:.5px solid var(--olive);border-radius:3px}
+.fmt b{font-family:var(--f-mono);font-size:11px;font-weight:700;color:var(--ink)}
+.fmt span{font-size:11px;color:var(--ink-light);line-height:1.4}
+.timeline{display:flex;height:56px;border-radius:4px;overflow:hidden;margin-top:8px}
+.timeline div{display:flex;flex-direction:column;justify-content:center;padding:0 12px;color:#fff;font-size:11px;line-height:1.3;border-right:1px solid rgba(255,255,255,.25)}
+.timeline div b{font-family:var(--f-mono);font-size:9px;letter-spacing:1px;font-weight:400;opacity:.75}
+.tl-legend{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:12px}
+.tl-legend p{font-size:12px;color:var(--ink-light);line-height:1.5}
+.tl-legend b{display:block;color:var(--ink);font-weight:600;font-size:12.5px}
+
+/* ─── SONIDO / FOTO ─── */
+.sound-card{display:flex;align-items:center;gap:18px;padding:22px;border:.5px solid var(--line-med);border-radius:4px;background:#1C1C1C;color:#fff}
+.sound-card .iso{width:90px}
+.wave{display:flex;gap:4px;align-items:center;height:40px;flex:1}
+.wave i{flex:1;background:#A9BC7E;border-radius:2px;height:20%;transition:height .15s}
+.swatches{display:flex;height:46px;border-radius:3px;overflow:hidden;margin-top:10px}
+.swatches i{flex:1}
+.grade{position:relative;aspect-ratio:4/5;border-radius:4px;overflow:hidden}
+.grade .scene{position:absolute;inset:0;background:radial-gradient(40% 30% at 70% 25%,#ffe9c4,transparent 70%),linear-gradient(180deg,#b9c0c8 0%,#8a8f86 40%,#5d5a50 41%,#6b5b47 100%)}
+.grade .scene::before{content:'';position:absolute;left:18%;bottom:22%;width:46%;height:22%;background:#2a2a2e;border-radius:6px 6px 0 0;box-shadow:0 30px 0 -10px #3a3a3e}
+.grade .scene::after{content:'';position:absolute;right:12%;bottom:30%;width:16%;height:26%;background:radial-gradient(circle at 50% 30%,#4f7a3a 0 40%,transparent 41%),linear-gradient(#e8e4de,#e8e4de) bottom/60% 35% no-repeat;border-radius:4px}
+.grade .lbl{position:absolute;left:10px;top:10px;font:700 10px var(--f-mono);color:#fff;background:rgba(0,0,0,.45);padding:3px 8px;letter-spacing:1px;z-index:2}
+.grade.after .scene{filter:sepia(.14) saturate(.82) contrast(.94) brightness(1.04) hue-rotate(-4deg)}
+.grade.after::after{content:'';position:absolute;inset:0;box-shadow:inset 0 0 80px rgba(40,30,20,.35)}
+
+/* ─── ESTUDIO ─── */
+.studio{display:grid;grid-template-columns:300px minmax(0,1fr);gap:24px;align-items:start}
+.ctl{display:flex;flex-direction:column;gap:12px;position:sticky;top:50px}
+.ctl label{font-family:var(--f-mono);font-size:9.5px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);display:flex;flex-direction:column;gap:5px}
+.ctl .row{display:flex;gap:8px;flex-wrap:wrap}
+.ctl .chk{flex-direction:row;align-items:center;gap:8px}
+.studio-stage-wrap{display:flex;justify-content:center;background:var(--cream-bg);border:.5px solid var(--line-med);border-radius:4px;padding:20px}
+#studioStage{max-width:420px}
+#studioStage.w169{max-width:100%}
+.studio-full{position:fixed;inset:0;background:#000;display:none;align-items:center;justify-content:center;z-index:999;cursor:none}
+.studio-full.on{display:flex}
+.studio-full .stage{border-radius:0}
+.studio-hint{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);font:400 11px var(--f-mono);color:rgba(255,255,255,.35);letter-spacing:1px;transition:opacity .4s}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#1C1C1C;color:#fff;font:400 12px var(--f-mono);padding:10px 18px;border-radius:30px;transition:transform .35s var(--ease-suave);z-index:1000}
+.toast.on{transform:translateX(-50%) translateY(0)}
+
+@media (max-width: 900px){
+  .g4{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .g3{grid-template-columns:minmax(0,1fr)}
+  .studio,.tester{grid-template-columns:minmax(0,1fr)}
+  .ctl{position:static}
+  .dur-row{grid-template-columns:100px 60px minmax(0,1fr)}
+  .dur-row span{grid-column:1/-1}
+  .tl-legend{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width: 700px){
+  .sidebar{display:none}
+  .main{margin-left:0}
+  .bb-section{padding:48px 16px}
+  .draft-bar{padding:8px 16px}
+  .g2,.g4{grid-template-columns:minmax(0,1fr)}
+  .g4.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .nombre-grid,.logo-row,.vs-row{grid-template-columns:minmax(0,1fr)}
+  .dont-row{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .vs-sep{display:none}
+  #dl{grid-template-columns:minmax(0,1fr)}
+}
+@media (prefers-reduced-motion: reduce){ .cta i,.sk-swipe i,.sk-stamp svg{animation:none} }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="clip-sym" viewBox="0 0 60 130"><path d="M20 120 V22 a14 14 0 0 1 28 0 V104 a20 20 0 0 1 -40 0 V40" fill="none" stroke="#A7A49A" stroke-width="6" stroke-linecap="round"/></symbol>
+  </defs>
+</svg>
+
+<nav class="sidebar">
+  <div class="sidebar-brand">
+    <i data-lk="olive" style="width:120px"></i>
+    <div class="sidebar-sub">Brandbook v4 · 2026</div>
+  </div>
+  <div class="nav-sections">
+    <div class="nav-section-label">Identidad</div>
+    <a class="nav-item active" href="#cover">00 · Portada</a>
+    <a class="nav-item" href="#nombre">01 · El nombre</a>
+    <a class="nav-item" href="#posicionamiento">02 · Posicionamiento</a>
+    <a class="nav-item" href="#logo">03 · Marca y logo</a>
+    <div class="nav-section-label">Visual</div>
+    <a class="nav-item" href="#color">04 · Color</a>
+    <a class="nav-item" href="#tipo">05 · Tipografía</a>
+    <a class="nav-item" href="#grafismo">06 · Grafismo</a>
+    <div class="nav-section-label">Estrategia</div>
+    <a class="nav-item" href="#reportes">07 · Datos y reportes</a>
+    <a class="nav-item" href="#redes">08 · Redes sociales</a>
+    <a class="nav-item" href="#voz">09 · Voz y tono</a>
+    <a class="nav-item" href="#aplicaciones">10 · Aplicaciones</a>
+    <div class="nav-section-label">Motion</div>
+    <a class="nav-item" href="#logoanim">11 · Logo animado</a>
+    <a class="nav-item" href="#motion">12 · Motion</a>
+    <div class="nav-section-label">Piezas</div>
+    <a class="nav-item" href="#graficos">13 · Gráficos animados</a>
+    <a class="nav-item" href="#estilo">14 · Estilo de piezas</a>
+    <a class="nav-item" href="#hooks">15 · Hooks</a>
+    <a class="nav-item" href="#portadas">16 · Portadas de Reels</a>
+    <a class="nav-item" href="#stickers">17 · Stickers</a>
+    <div class="nav-section-label">Video</div>
+    <a class="nav-item" href="#video">18 · Kit de video</a>
+    <a class="nav-item" href="#sonido">19 · Sonido</a>
+    <a class="nav-item" href="#foto">20 · Foto y video</a>
+    <a class="nav-item" href="#estudio">21 · Estudio</a>
+    <div class="nav-section-label">Recursos</div>
+    <a class="nav-item" href="#descargas">22 · Descargas</a>
+  </div>
+  <div class="sidebar-footer">LECI Estudio<br>leciestudio.com<br>@leci.estudio</div>
+</nav>
+
+<main class="main">
+
+<!-- 00 PORTADA -->
+<section id="cover" class="bb-section">
+  <div class="cover-tag">Manual de marca · 2026</div>
+  <div class="cover-logo"><i data-lk="olive" data-anim="1"></i></div>
+  <div class="cover-sub">Ideas con foco. <b>Marcas con propósito.</b></div>
+  <div class="cover-tagline">Estrategia <span>·</span> Contenido <span>·</span> Conexión</div>
+  <div class="cover-meta">
+    <div><span>Versión</span><b>4.0</b></div><div><span>Año</span><b>2026</b></div><div><span>Uso</span><b>Interno</b></div>
+  </div>
+  <button class="btn cover-replay" onclick="replayCover()">↻ Ver animación</button>
+  <div class="changelog">
+    <h4>Qué cambia en v4</h4>
+    <ul>
+      <li>Logos vectoriales originales: LECI Estudio, LECI y el isotipo LC.</li>
+      <li>El rosa sale del sistema: la C y el punto pasan a ciruela.</li>
+      <li>Cormorant sale del sistema: Open Sans es la principal y Bricolage, el acento.</li>
+      <li>Nuevo: motion, gráficos animados, kit de video, sonido, estudio de grabación y descargas.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 01 NOMBRE -->
+<section id="nombre" class="bb-section">
+  <span class="eyebrow">01 · El nombre</span>
+  <h2 class="section-title">Cada letra <em>tiene un propósito</em></h2>
+  <p class="section-intro">LECI no es un acrónimo arbitrario. Es la síntesis de los cuatro pilares que definen nuestro enfoque de trabajo y nuestra promesa de valor.</p>
+  <div class="section-body">
+    <div class="nombre-grid">
+      <div class="nombre-cell"><div class="nombre-letter">L</div><div class="nombre-word">Lógica</div><div class="nombre-desc">Cada decisión está basada en datos y razonamiento estructurado. No actuamos por intuición sola.</div></div>
+      <div class="nombre-cell"><div class="nombre-letter">E</div><div class="nombre-word">Estrategia</div><div class="nombre-desc">Pensamos antes de ejecutar. La dirección importa más que la velocidad.</div></div>
+      <div class="nombre-cell"><div class="nombre-letter c">C</div><div class="nombre-word">Creatividad</div><div class="nombre-desc">La forma en que comunicamos importa. La creatividad amplifica el mensaje correcto.</div></div>
+      <div class="nombre-cell"><div class="nombre-letter">I</div><div class="nombre-word">Impacto</div><div class="nombre-desc">Todo lo que hacemos apunta a resultados medibles y transformación real del negocio.</div></div>
+    </div>
+    <div class="usage-note">
+      <p><strong>Nombre completo:</strong> LECI Estudio</p>
+      <p><strong>Uso correcto:</strong> "LECI" en mayúsculas siempre. Nunca "Leci", "leci", ni separado. El dominio oficial es leciestudio.com.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 02 POSICIONAMIENTO -->
+<section id="posicionamiento" class="bb-section">
+  <span class="eyebrow">02 · Posicionamiento</span>
+  <h2 class="section-title">No gestionamos ads. <em>Transformamos cómo vendés.</em></h2>
+  <p class="section-intro">LECI es un estudio boutique de estrategia de marca y performance digital. El socio estratégico que elige quien quiere vender distinto — y cobrar caro por eso.</p>
+  <div class="section-body">
+    <div class="claim-block">
+      <div class="claim-text">Ideas con foco. <b>Marcas con propósito.</b></div>
+      <span class="claim-attr">Tagline · Uso en todas las piezas de comunicación</span>
+    </div>
+    <div class="g3" style="margin-top:20px">
+      <div class="pillar"><span class="pillar-num">01</span><div class="pillar-title">Boutique</div><div class="pillar-desc">Máximo 15 clientes activos. Cada marca recibe atención estratégica real, no un template.</div></div>
+      <div class="pillar"><span class="pillar-num">02</span><div class="pillar-title">Método</div><div class="pillar-desc">Auditoría → Estrategia → Ejecución → Reporte. Un ciclo riguroso que no improvisamos.</div></div>
+      <div class="pillar"><span class="pillar-num">03</span><div class="pillar-title">Resultados</div><div class="pillar-desc">Medimos todo. Reportamos con honestidad. Las proyecciones son compromisos, no promesas vacías.</div></div>
+    </div>
+    <div class="usage-note">
+      <p><strong>Audiencia objetivo:</strong> Marcas en Argentina, España, Israel y Miami que quieren crecer con intención. Emprendedores y empresas que entienden que la publicidad bien hecha es inversión, no gasto.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 03 MARCA Y LOGO -->
+<section id="logo" class="bb-section">
+  <span class="eyebrow">03 · Marca y logo <span class="note-new">vectorial</span></span>
+  <h2 class="section-title">Tres versiones, <em>un mismo trazo</em></h2>
+  <p class="section-intro">La L serif con la onda conectora, la C abierta con su punto y una tipografía editorial de trazo fino. Todo en vector: bordes perfectos en cualquier tamaño. La C y el punto van en ciruela en el logo; en el isotipo, el punto es el único acento.</p>
+  <div class="section-body">
+    <div class="sub">Logo principal · LECI Estudio</div>
+    <div class="logo-row">
+      <div class="logo-cell" style="background:var(--cream)"><i data-lk="olive" style="width:72%"></i><span>Sobre crema</span></div>
+      <div class="logo-cell bg-olive"><i data-lk="cream" style="width:72%"></i><span style="color:rgba(255,255,255,.55)">Sobre olive</span></div>
+      <div class="logo-cell" style="background:#1C1C1C"><i data-lk="cream" style="width:72%"></i><span style="color:rgba(255,255,255,.45)">Sobre oscuro</span></div>
+    </div>
+    <div class="sub">Wordmark · LECI e isotipo · LC</div>
+    <div class="logo-row">
+      <div class="logo-cell" style="background:var(--cream)"><i data-lk="olive" data-estudio="no" style="width:72%"></i><span>Wordmark · sin ESTUDIO</span></div>
+      <div class="logo-cell" style="background:var(--cream)"><i data-iso="olive" style="width:46%"></i><span>Isotipo · perfil, favicon, sellos</span></div>
+      <div class="logo-cell bg-olive"><i data-iso="cream" style="width:46%"></i><span style="color:rgba(255,255,255,.55)">Isotipo sobre olive</span></div>
+    </div>
+    <div class="sub">Zona de protección y tamaño mínimo</div>
+    <div class="g2">
+      <div class="logo-cell protect" style="background:var(--cream)"><div class="protect-box"><i data-lk="olive" style="width:100%"></i></div><span>Aire libre = altura de la E alrededor del logo</span></div>
+      <div class="card"><h4>Tamaños mínimos</h4><ul><li>LECI Estudio: 120 px de ancho en digital (25 mm en impresión). Debajo de eso, usá el wordmark.</li><li>Wordmark LECI: 80 px de ancho.</li><li>Isotipo: 28 px de alto.</li><li>Nunca uses ESTUDIO por debajo de 8 px de alto: pasá al wordmark.</li></ul></div>
+    </div>
+    <div class="sub">Usos incorrectos</div>
+    <div class="dont-row">
+      <div class="dont"><i data-lk="olive" style="width:80%;transform:scaleX(1.35)"></i><span>No deformar</span></div>
+      <div class="dont"><i data-lk="olive" style="width:70%;transform:rotate(-12deg)"></i><span>No rotar</span></div>
+      <div class="dont"><div class="wrongcolor"><i data-lk="olive" style="width:80%"></i></div><span>No cambiar los colores</span></div>
+      <div class="dont"><div style="font:700 34px var(--f-body);color:var(--olive);letter-spacing:.1em">LECI</div><span>No reescribir con otra fuente</span></div>
+      <div class="dont" style="background:#7A8A59"><i data-lk="olive" style="width:80%"></i><span style="color:#fff">No olive sobre olive</span></div>
+    </div>
+    <div class="usage-note"><p><strong>Archivos:</strong> todas las versiones en SVG y PNG transparente están en la sección 22 · Descargas (carpeta <code>branding/logos</code>).</p></div>
+  </div>
+</section>
+
+<!-- 04 COLOR -->
+<section id="color" class="bb-section">
+  <span class="eyebrow">04 · Color <span class="note-new">sin rosa</span></span>
+  <h2 class="section-title">Olive que sostiene, <em>ciruela que señala</em></h2>
+  <p class="section-intro">Olive es el color de marca. Ciruela es el único acento: está en la C y el punto del logo, y en lo que tiene que destacarse. Los neutros cálidos dan aire. Desde v4 el rosa sale del sistema.</p>
+  <div class="section-body">
+    <div class="color-grid">
+      <div class="swatch"><i style="background:#7A8A59"></i><b>Olive</b><code>#7A8A59</code><span>Primario de marca</span></div>
+      <div class="swatch"><i style="background:#5E6B43"></i><b>Olive Ink</b><code>#5E6B43</code><span>Texto olive legible</span></div>
+      <div class="swatch"><i style="background:#A9BC7E"></i><b>Olive Soft</b><code>#A9BC7E</code><span>Datos sobre oscuro</span></div>
+      <div class="swatch"><i style="background:#9C4A63"></i><b>Ciruela</b><code>#9C4A63</code><span>Acento: logo, énfasis, CTA</span></div>
+      <div class="swatch"><i style="background:#7A3349"></i><b>Ciruela Deep</b><code>#7A3349</code><span>Hover, texto sobre claro</span></div>
+      <div class="swatch"><i style="background:#3D3D3D"></i><b>Charcoal</b><code>#3D3D3D</code><span>Texto principal</span></div>
+      <div class="swatch"><i style="background:#E8E4DE"></i><b>Crema</b><code>#E8E4DE</code><span>Superficies y fondos</span></div>
+      <div class="swatch"><i style="background:#F6F4EF"></i><b>Cream Pale</b><code>#F6F4EF</code><span>Fondo general, texto sobre olive</span></div>
+      <div class="swatch"><i style="background:#1C1C1C"></i><b>Negro</b><code>#1C1C1C</code><span>Fondos de alto impacto</span></div>
+    </div>
+    <div class="ratio"><i style="flex:60;background:#7A8A59">Olive 60%</i><i style="flex:28;background:#E8E4DE;color:#3D3D3D">Neutros 28%</i><i style="flex:12;background:#9C4A63">Ciruela 12%</i></div>
+    <div class="g3" style="margin-top:20px">
+      <div class="card"><h4>Olive · primario</h4><ul><li>Logo y wordmark</li><li>Fondos de bloques destacados</li><li>Barras y datos base</li><li>Botones y nav activo</li></ul></div>
+      <div class="card"><h4>Ciruela · acento</h4><ul><li>La C y el punto del logo</li><li>Una palabra clave por pieza</li><li>El dato final de un gráfico</li><li>Etiquetas “Caso real”, “Tip”</li></ul></div>
+      <div class="card"><h4>Neutros</h4><ul><li>Crema y cream pale: fondos</li><li>Charcoal: texto</li><li>Negro: piezas de alto impacto</li><li>Nunca gris frío</li></ul></div>
+    </div>
+    <div class="usage-note"><p><strong>Regla:</strong> ciruela nunca como fondo grande ni en más de un elemento de texto por pieza. Si dudás, es olive.</p><p><strong>Rosa:</strong> fuera del sistema desde v4. Si aparece en un archivo viejo, reemplazalo por ciruela #9C4A63.</p></div>
+  </div>
+</section>
+
+<!-- 05 TIPOGRAFÍA -->
+<section id="tipo" class="bb-section">
+  <span class="eyebrow">05 · Tipografía <span class="note-new">ampliada</span></span>
+  <h2 class="section-title">Open Sans habla. <em>Bricolage remata.</em></h2>
+  <p class="section-intro">Open Sans sigue siendo la principal: títulos, cuerpo, subtítulos y CTAs. Bricolage Grotesque entra como acento para el hook o la palabra que tiene que pegar. Space Mono para datos. Cormorant sale del sistema: la web, los reportes y el brandbook también usan Bricolage + Open Sans.</p>
+  <div class="section-body">
+    <div class="g4">
+      <div class="role-card"><div class="role-spec"><div style="font:800 34px/1 var(--f-body);letter-spacing:-.02em">Vendé con<br>intención.</div></div><div class="role-info"><span class="role-pct">85–90%</span><b>Open Sans · principal</b><span>300 · 400 · 600 · 800. Redes, video, subtítulos.</span></div></div>
+      <div class="role-card"><div class="role-spec"><div style="font:800 46px/.9 var(--f-accent);letter-spacing:-.045em;color:#C9D99E">triplicó</div></div><div class="role-info"><span class="role-pct">1 por pieza</span><b>Bricolage · acento</b><span>400 + 800 mezclados. Solo hooks y remates.</span></div></div>
+      <div class="role-card"><div class="role-spec"><div style="font:400 15px var(--f-mono);letter-spacing:.15em;color:#A9BC7E">ROAS 4,2×<br>CPA $8,30</div></div><div class="role-info"><span class="role-pct">labels</span><b>Space Mono · datos</b><span>Métricas, etiquetas, @handle.</span></div></div>
+      <div class="role-card"><div class="role-spec" style="background:var(--cream)"><div style="font:400 30px/1 var(--f-accent);letter-spacing:-.035em;color:var(--ink)">Marcas con <b style="font-weight:800;color:var(--plum)">propósito</b></div></div><div class="role-info"><span class="role-pct">web</span><b>Bricolage · títulos web</b><span>400 + 800. Web, reportes, propuestas, brandbook.</span></div></div>
+    </div>
+
+    <div class="sub">Estilo de título: pesos mezclados</div>
+    <div class="g2">
+      <div style="background:#E8E4DE;border-radius:4px;padding:40px 36px;color:#3D3D3D">
+        <div style="font:400 26px/1 var(--f-accent);letter-spacing:-.03em">Este negocio</div>
+        <div style="font:800 64px/.9 var(--f-accent);letter-spacing:-.045em;margin:6px 0 8px">triplicó<br><span style="background:#7A8A59;color:#F6F4EF;padding:0 .12em">ventas</span></div>
+        <div style="font:400 24px/1 var(--f-accent);letter-spacing:-.03em;color:#5C5A4C">en un mes.</div>
+        <div style="display:inline-block;margin-top:22px;background:#FBFAF6;font:600 15px var(--f-body);padding:6px 12px;transform:rotate(-3deg);box-shadow:0 8px 18px rgba(0,0,0,.12)">Y así lo conseguimos.</div>
+      </div>
+      <div class="card" style="background:var(--surface)">
+        <h4>Reglas</h4>
+        <ul>
+          <li><b style="color:var(--ink)">Liviano contextualiza, pesado es el mensaje.</b> Bricolage 400 arriba y abajo, 800 en el centro.</li>
+          <li><b style="color:var(--ink)">Tracking negativo</b> en títulos grandes: −3% a −4,5%. Interlineado 0,9.</li>
+          <li><b style="color:var(--ink)">Un resaltado por pieza.</b> Caja olive detrás de la palabra clave, nunca dos.</li>
+          <li><b style="color:var(--ink)">Máximo 3 fuentes:</b> Bricolage + Open Sans + Space Mono.</li>
+          <li><b style="color:var(--ink)">Etiqueta blanca girada</b> (−3°) para el remate en Open Sans 600.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sub">Escala para video · 1080 × 1920</div>
+    <table class="tbl">
+      <thead><tr><th>Rol</th><th>Fuente / peso</th><th>Tamaño</th><th>Interlineado</th><th>Tracking</th><th>Muestra</th></tr></thead>
+      <tbody>
+        <tr><td>Hook</td><td>Bricolage 800</td><td><code>140–160 px</code></td><td><code>0,9</code></td><td><code>−4,5%</code></td><td style="font:800 26px/1 var(--f-accent);letter-spacing:-.045em">triplicó</td></tr>
+        <tr><td>Contexto del hook</td><td>Bricolage 400</td><td><code>66–80 px</code></td><td><code>1,0</code></td><td><code>−3%</code></td><td style="font:400 18px var(--f-accent);letter-spacing:-.03em">Este negocio</td></tr>
+        <tr><td>Título</td><td>Open Sans 800</td><td><code>80–96 px</code></td><td><code>1,05</code></td><td><code>−2%</code></td><td style="font:800 18px var(--f-body);letter-spacing:-.02em">Antes de pautar</td></tr>
+        <tr><td>Subtítulo / caption</td><td>Open Sans 800</td><td><code>60–70 px</code></td><td><code>1,2</code></td><td><code>−1%</code></td><td><span style="font:800 14px var(--f-body);background:#FBFAF6;color:#3D3D3D;padding:2px 6px;border:.5px solid var(--line-med)">revisamos el ángulo</span></td></tr>
+        <tr><td>Cuerpo</td><td>Open Sans 400 / 600</td><td><code>40–46 px</code></td><td><code>1,35</code></td><td><code>0</code></td><td style="font-size:13px">Sin subir presupuesto.</td></tr>
+        <tr><td>Label / dato</td><td>Space Mono 400</td><td><code>26–32 px</code></td><td><code>1,0</code></td><td><code>+18%</code> MAYÚS</td><td style="font:400 10px var(--f-mono);letter-spacing:.18em">CASO DE ÉXITO</td></tr>
+        <tr><td>Número protagonista</td><td>Bricolage 800</td><td><code>260–330 px</code></td><td><code>0,85</code></td><td><code>−6%</code></td><td style="font:800 26px/1 var(--f-accent);letter-spacing:-.06em">4,2×</td></tr>
+      </tbody>
+    </table>
+    <div class="usage-note"><p><strong>Regla de lectura en celular:</strong> nada menor a 40 px en un 1080 × 1920 (salvo labels en mono de 26 px). Si tenés que achicar más, sobra texto.</p></div>
+
+    <div class="sub">Probador</div>
+    <div class="tester">
+      <div class="tester-ctl">
+        <label>Texto<input type="text" id="tText" value="Tu negocio puede vender más."></label>
+        <label>Fuente<select id="tFont"><option value="accent">Bricolage Grotesque</option><option value="body">Open Sans</option><option value="mono">Space Mono</option></select></label>
+        <label>Peso <span id="tWv">800</span><input type="range" id="tW" min="200" max="800" step="100" value="800"></label>
+        <label>Tracking <span id="tLv">−4%</span><input type="range" id="tL" min="-6" max="20" step="0.5" value="-4"></label>
+        <label>Tamaño <span id="tSv">64</span><input type="range" id="tS" min="18" max="110" step="1" value="64"></label>
+      </div>
+      <div class="tester-out"><div id="tOut">Tu negocio puede vender más.</div><div class="tester-css" id="tCss"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 GRAFISMO -->
+<section id="grafismo" class="bb-section">
+  <span class="eyebrow">06 · Grafismo</span>
+  <h2 class="section-title">Elementos <em>de apoyo visual</em></h2>
+  <p class="section-intro">Geometría limpia y líneas finas. Olive domina; ciruela marca un único punto de acento, igual que en el logo.</p>
+  <div class="section-body">
+    <div class="g2">
+      <div class="card"><h4>Líneas métricas</h4>
+        <div class="line-pattern" id="linePattern"></div>
+        <p style="margin-top:10px">Olive = datos base. Ciruela = el dato que importa, siempre al final.</p></div>
+      <div class="card"><h4>Grilla de puntos</h4><div class="dot-grid" id="dotGrid"></div>
+        <p style="margin-top:12px">Olive en distintas intensidades. Un solo punto ciruela marca el acento.</p></div>
+      <div class="card"><h4>Separadores</h4>
+        <div style="display:flex;flex-direction:column;gap:14px;padding:8px 0">
+          <div style="height:.5px;background:var(--line-med)"></div>
+          <div style="display:flex;align-items:center;gap:8px"><div style="flex:1;height:.5px;background:var(--line-med)"></div><div style="width:5px;height:5px;border-radius:50%;background:var(--plum)"></div><div style="flex:1;height:.5px;background:var(--line-med)"></div></div>
+          <div style="height:1px;background:linear-gradient(90deg,var(--olive) 0%,var(--plum) 70%,transparent 100%)"></div>
+        </div>
+        <p>El punto ciruela bisecta. El degradé olive → ciruela es la línea de marca.</p></div>
+      <div class="card"><h4>Bordes de acento</h4>
+        <div style="padding:12px 16px;border-left:3px solid var(--olive);background:var(--olive-dim);margin-top:4px;font-size:13px;color:var(--ink-mid)">Olive para información importante, citas y logros.</div>
+        <div style="padding:12px 16px;border-left:3px solid var(--plum);background:var(--plum-dim);margin-top:8px;font-size:13px;color:var(--ink-mid)">Ciruela para notas, aclaraciones y énfasis.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 DATOS Y REPORTES -->
+<section id="reportes" class="bb-section">
+  <span class="eyebrow">07 · Datos y reportes</span>
+  <h2 class="section-title">Los números, <em>con orden</em></h2>
+  <p class="section-intro">Cómo se ven los datos en reportes, propuestas y dashboards. Olive para lo principal, ciruela para el dato comparativo o el resultado final. Las versiones animadas para video están en la sección 13.</p>
+  <div class="section-body">
+    <div class="g4 kpis">
+      <div class="kpi"><span>ROAS</span><b>4,2×</b><em>↑ +0,8 vs ant.</em></div>
+      <div class="kpi"><span>CPA</span><b>$8,30</b><em>↓ −$1,20 vs ant.</em></div>
+      <div class="kpi hi"><span>Conversiones</span><b>314</b><em>↑ +41% vs ant.</em></div>
+      <div class="kpi"><span>CTR</span><b>2,8%</b><em class="down">↓ −0,3% vs meta</em></div>
+    </div>
+    <div class="sub">Proyección trimestral</div>
+    <table class="tbl">
+      <thead><tr><th>Mes</th><th>Inversión</th><th>Conv. est.</th><th>ROAS est.</th><th>Variación</th></tr></thead>
+      <tbody>
+        <tr><td><b class="tm">Enero</b></td><td><code>$2.200</code></td><td><code>280</code></td><td><code>3,8×</code></td><td><span class="badge">↑ +8%</span></td></tr>
+        <tr><td><b class="tm">Febrero</b></td><td><code>$2.500</code></td><td><code>320</code></td><td><code>4,1×</code></td><td><span class="badge">↑ +14%</span></td></tr>
+        <tr><td><b class="tm">Marzo</b></td><td><code>$2.800</code></td><td><code>390</code></td><td><code>4,5×</code></td><td><span class="badge plum">↑ +22%</span></td></tr>
+      </tbody>
+    </table>
+    <div class="sub">Header de reporte mensual</div>
+    <div class="report-head bg-olive"><div><span>Informe mensual</span><b>Cliente · Octubre 2026</b></div><i data-lk="cream" style="width:150px"></i></div>
+  </div>
+</section>
+
+<!-- 08 REDES SOCIALES -->
+<section id="redes" class="bb-section">
+  <span class="eyebrow">08 · Redes sociales</span>
+  <h2 class="section-title">Directo al punto, <em>con un remate</em></h2>
+  <p class="section-intro">En redes el sistema es olive + crema + charcoal + negro, con fotos reales de escritorio. Open Sans para todo lo que se lee y Bricolage para el hook. Ciruela, solo para una palabra o una etiqueta por pieza.</p>
+  <div class="section-body">
+    <div class="demo-grid">
+      <div class="demo" data-scene="hook" data-bg="negro" data-fmt="4:5" data-static="1" data-title="Post oscuro · alto impacto"></div>
+      <div class="demo" data-scene="hook" data-bg="crema" data-fmt="4:5" data-static="1" data-p='{"eyebrow":"Marketing digital","pre":"¿Cada cuánto","key":"tengo que publicar?","post":"","tag":"","hl":"si"}' data-title="Post crema · editorial"></div>
+      <div class="demo" data-scene="hook" data-bg="olive" data-fmt="4:5" data-static="1" data-p='{"eyebrow":"Mitos","pre":"¿Cuántos de estos","key":"mitos creés?","post":"5 mitos que te están frenando →","tag":"","hl":"no"}' data-title="Post olive · marca"></div>
+      <div class="demo" data-scene="note" data-bg="foto" data-fmt="9:16" data-static="1" data-title="Story · nota con clip"></div>
+    </div>
+    <div class="usage-note">
+      <p><strong>Fondos:</strong> negro #1C1C1C, crema #E8E4DE, olive con degradé o foto con velo oscuro. Texto en blanco o charcoal.</p>
+      <p><strong>Tipografía:</strong> Open Sans 800 para títulos y subtítulos, 400 para cuerpo. Bricolage 400 + 800 para el hook. Space Mono para labels y @handle.</p>
+      <p><strong>Perfil:</strong> foto de perfil con el isotipo y destacadas con íconos de línea + punto ciruela (sección 10 y Descargas).</p>
+    </div>
+  </div>
+</section>
+
+<!-- 09 VOZ Y TONO -->
+<section id="voz" class="bb-section">
+  <span class="eyebrow">09 · Voz y tono</span>
+  <h2 class="section-title">Directo, estratégico, <em>sin relleno</em></h2>
+  <p class="section-intro">LECI habla como un estratega que te respeta. En voseo rioplatense cuando el contexto lo permite. Sin tecnicismos innecesarios ni hype vacío.</p>
+  <div class="section-body">
+    <div class="g2">
+      <div class="tono"><span class="tono-l">Directo</span><p class="tono-ex">"No alcanzamos la meta de conversiones. Acá está el por qué y qué vamos a hacer."</p><p>Decimos lo que es, aunque no sea lo que queremos escuchar.</p></div>
+      <div class="tono"><span class="tono-l">Estratégico</span><p class="tono-ex">"Antes de subir el presupuesto, necesitamos revisar el ángulo creativo."</p><p>Pensamos antes de actuar. Siempre hay un razonamiento detrás.</p></div>
+      <div class="tono"><span class="tono-l p">Cercano</span><p class="tono-ex">"Vamos bien, pero hay margen para mejorar el costo por resultado."</p><p>Profesional pero no frío. Hablamos de igual a igual.</p></div>
+      <div class="tono"><span class="tono-l p">Sin relleno</span><p class="tono-ex">"El resultado fue X. La causa fue Y. La solución es Z."</p><p>Estructura clara. Sin paja. Los datos hablan por sí solos.</p></div>
+    </div>
+    <div class="vs-row">
+      <div class="vs-col"><h4 style="color:var(--plum)">No decimos</h4><div class="vs no">"¡Resultados increíbles este mes!"</div><div class="vs no">"Maximizamos el potencial de tu marca."</div><div class="vs no">"¡Felicitaciones por tu inversión!"</div></div>
+      <div class="vs-sep">→</div>
+      <div class="vs-col"><h4 style="color:var(--olive)">Sí decimos</h4><div class="vs si">"ROAS 4,2×. Superamos el objetivo en un 18%."</div><div class="vs si">"Ajustamos la segmentación para bajar el CPA."</div><div class="vs si">"El mes fue positivo. Acá está el desglose."</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 10 APLICACIONES -->
+<section id="aplicaciones" class="bb-section">
+  <span class="eyebrow">10 · Aplicaciones</span>
+  <h2 class="section-title">La marca <em>en contexto</em></h2>
+  <p class="section-intro">Cómo se ve LECI en los puntos de contacto reales.</p>
+  <div class="section-body">
+    <div class="g2">
+      <div class="app"><h4>Tarjeta de presentación</h4>
+        <div class="bcard bg-olive"><div><b>Lean Alfano</b><span>Estrategia · LECI Estudio</span></div><div class="bcard-foot"><code>leciestudio.com<br>@leci.estudio</code><i data-lk="cream" style="width:110px"></i></div></div></div>
+      <div class="app"><h4>Perfil de Instagram</h4>
+        <div class="ig"><div class="ig-top"><img src="destacadas/LECI-perfil-olive.png" alt="Foto de perfil LECI"><div><b>leci.estudio</b><span>Estudio de estrategia y performance · Ideas con foco. Marcas con propósito.</span></div></div>
+          <div class="ig-hl" id="igHl"></div></div></div>
+      <div class="app" style="grid-column:1/-1"><h4>Firma de email</h4>
+        <div class="sig"><i data-iso="olive" style="width:64px"></i><div><b>Lean Alfano</b><span>Estrategia · LECI Estudio</span><code>leciestudio.com · @leci.estudio</code></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 11 LOGO ANIMADO -->
+<section id="logoanim" class="bb-section">
+  <span class="eyebrow">11 · Logo animado <span class="note-new">nuevo</span></span>
+  <h2 class="section-title">El logo <em>se arma</em></h2>
+  <p class="section-intro">Dos versiones animadas. LECI Estudio: la L se dibuja con la onda, la E y la I suben, la C gira y cierra, aparece el punto y ESTUDIO se acomoda. Isotipo + tagline: la L se dibuja, la C gira, el punto aparece y sube el tagline. Siempre en ritmo calmo y con el logo sonoro.</p>
+  <div class="section-body">
+    <div class="sub">LECI Estudio</div>
+    <div class="demo-grid wide">
+      <div class="demo" data-scene="logo" data-bg="crema" data-fmt="16:9" data-title="Logo · crema"></div>
+      <div class="demo" data-scene="logo" data-bg="olive" data-fmt="16:9" data-title="Logo · olive"></div>
+      <div class="demo" data-scene="logo" data-bg="negro" data-fmt="16:9" data-title="Logo · negro"></div>
+    </div>
+    <div class="sub">Isotipo + tagline</div>
+    <div class="demo-grid wide">
+      <div class="demo" data-scene="iso" data-bg="crema" data-fmt="16:9" data-title="Isotipo · crema"></div>
+      <div class="demo" data-scene="iso" data-bg="olive" data-fmt="16:9" data-title="Isotipo · olive"></div>
+      <div class="demo" data-scene="iso" data-bg="negro" data-fmt="16:9" data-title="Isotipo · negro"></div>
+    </div>
+    <div class="usage-note"><p><strong>Cuándo:</strong> al inicio o al cierre de videos largos, nunca en el medio de un reel. En reels de menos de 30 s, solo al final.</p><p><strong>Videos listos:</strong> 8 formatos de cada versión en <code>video/logo-leci-estudio</code> y <code>video/isotipo-con-tagline</code> (sección 22).</p></div>
+  </div>
+</section>
+
+<!-- 12 MOTION -->
+<section id="motion" class="bb-section">
+  <span class="eyebrow">12 · Motion <span class="note-new">nuevo</span></span>
+  <h2 class="section-title">Calmo, preciso, <em>con intención</em></h2>
+  <p class="section-intro">Las animaciones de LECI se comportan como hablamos: sin estridencia, sin rebotes gratuitos y siempre guiando la lectura. Primero el contexto, después el mensaje y al final el dato.</p>
+  <div class="section-body">
+    <div class="g3">
+      <div class="principle"><span class="n">01</span><h5>Preciso</h5><p>Todo frena suave y llega a su lugar exacto. El rebote (acento) se usa solo para stickers y el punto del logo.</p></div>
+      <div class="principle"><span class="n">02</span><h5>Calmo</h5><p>Entradas de 0,8 a 1 s. Nada aparece de golpe ni gira por girar. La calma transmite seguridad.</p></div>
+      <div class="principle"><span class="n">03</span><h5>Con intención</h5><p>Escalonado de 110 ms entre palabras o elementos. El orden del movimiento es el orden de lectura.</p></div>
+    </div>
+
+    <div class="sub">Curvas · tocá cada una</div>
+    <div class="g4" id="curves"></div>
+
+    <div class="sub">Duraciones</div>
+    <div id="durs"></div>
+
+    <div class="sub">Ritmo</div>
+    <p style="font-size:13px;color:var(--ink-light);margin-bottom:14px">El ritmo base de LECI es <b style="color:var(--ink)">calmo</b>: todas las piezas, los tiempos y las specs para CapCut usan este ritmo. Estándar y enérgico quedan para casos puntuales (por ejemplo, un reel de tendencia) y se eligen en el Estudio.</p>
+    <div class="demo-grid">
+      <div class="demo" data-scene="hook" data-bg="crema" data-fmt="9:16" data-k="1.25" data-title="Calmo · base LECI"></div>
+      <div class="demo" data-scene="hook" data-bg="crema" data-fmt="9:16" data-k="1" data-title="Estándar · ×1"></div>
+      <div class="demo" data-scene="hook" data-bg="crema" data-fmt="9:16" data-k="0.75" data-title="Enérgico · ×0,75"></div>
+    </div>
+
+    <div class="sub">Tokens para web</div>
+<code class="code"><span class="c">/* LECI · motion tokens */</span>
+--ease-suave:   <span class="k">cubic-bezier(.22, 1, .36, 1)</span>;    <span class="c">/* entradas */</span>
+--ease-preciso: <span class="k">cubic-bezier(.65, 0, .35, 1)</span>;    <span class="c">/* transiciones, wipes, resaltados */</span>
+--ease-acento:  <span class="k">cubic-bezier(.34, 1.56, .64, 1)</span>; <span class="c">/* pops: stickers, punto del logo */</span>
+--ease-salida:  <span class="k">cubic-bezier(.55, 0, 1, .45)</span>;    <span class="c">/* salidas */</span>
+<span class="c">/* ritmo base: calmo */</span>
+--d-micro: <span class="k">190ms</span>; --d-ui: <span class="k">375ms</span>; --d-entrada: <span class="k">875ms</span>; --d-grafico: <span class="k">1250ms</span>; --d-dato: <span class="k">1750ms</span>; --stagger: <span class="k">110ms</span>;</code>
+  </div>
+</section>
+
+<!-- 13 GRÁFICOS ANIMADOS -->
+<section id="graficos" class="bb-section">
+  <span class="eyebrow">13 · Gráficos animados <span class="note-new">nuevo</span></span>
+  <h2 class="section-title">Los datos <em>entran en escena</em></h2>
+  <p class="section-intro">Gráficos para reels de resultados, casos de éxito y reportes en video. Los números cuentan, las barras crecen y la línea se dibuja. El ciruela marca el dato final, igual que el punto del logo. Todos se editan y se graban en el Estudio.</p>
+  <div class="section-body">
+    <div class="demo-grid">
+      <div class="demo" data-scene="kpi" data-bg="negro" data-fmt="9:16" data-title="KPI con contador"></div>
+      <div class="demo" data-scene="bars" data-bg="crema" data-fmt="9:16" data-title="Barras"></div>
+      <div class="demo" data-scene="line" data-bg="olive" data-fmt="9:16" data-title="Línea de crecimiento"></div>
+      <div class="demo" data-scene="funnel" data-bg="crema" data-fmt="9:16" data-title="Embudo"></div>
+    </div>
+    <div class="sub">Overlays para tus videos</div>
+    <div class="demo-grid wide">
+      <div class="demo" data-scene="lower" data-bg="foto" data-fmt="16:9" data-title="Lower third · nombre"></div>
+      <div class="demo" data-scene="wipe" data-bg="negro" data-fmt="16:9" data-title="Transición de marca"></div>
+      <div class="demo" data-scene="end" data-bg="olive" data-fmt="16:9" data-title="End card · CTA"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 14 ESTILO DE PIEZAS -->
+<section id="estilo" class="bb-section">
+  <span class="eyebrow">14 · Estilo de piezas <span class="note-new">nuevo</span></span>
+  <h2 class="section-title">El lenguaje <em>de las piezas</em></h2>
+  <p class="section-intro">El estilo que ya funciona en el feed, convertido en reglas: objetos de escritorio reales (papel, clip, etiqueta, sello), resaltado olive, pesos mezclados y tres fondos que se alternan.</p>
+  <div class="section-body">
+    <div class="demo-grid">
+      <div class="demo" data-scene="hook" data-bg="crema" data-fmt="9:16" data-p='{"hl":"si","eyebrow":"Productividad","pre":"Cómo mantener","key":"el foco","post":"en un mundo distraído.","tag":""}' data-title="Crema + resaltado"></div>
+      <div class="demo" data-scene="note" data-bg="foto" data-fmt="9:16" data-title="Nota con clip · foto"></div>
+      <div class="demo" data-scene="hook" data-bg="olive" data-fmt="9:16" data-title="Olive + etiqueta"></div>
+      <div class="demo" data-scene="hook" data-bg="papel" data-fmt="9:16" data-p='{"hl":"si","eyebrow":"18 · Octubre","pre":"Día de la","key":"madre.","post":"¿Tu negocio aprovechó esta fecha?","tag":""}' data-title="Papel cuadriculado"></div>
+    </div>
+    <div class="sub">Componentes</div>
+    <div class="g4">
+      <div class="card"><h4>Resaltado</h4><p>Caja olive plana detrás de la palabra clave, con el texto en crema. Sobre olive: caja crema y texto olive. Entra con un barrido de izquierda a derecha (0,65 s, curva precisa).</p></div>
+      <div class="card"><h4>Nota con clip</h4><p>Papel blanco cálido (#FBFAF6), esquinas de 22 px, girado −2,5° y con sombra suave. El clip va arriba a la izquierda y la etiqueta sale abajo girada +3°.</p></div>
+      <div class="card"><h4>Etiqueta</h4><p>Rectángulo blanco, Open Sans 600, girado −3° o +3°. Es el remate: “Y así lo conseguimos.”, “Y fue por esto…”.</p></div>
+      <div class="card"><h4>Fondos</h4><p>Crema plano · olive con degradé de luz · foto con velo oscuro · papel cuadriculado para fechas. Alternalos en el feed y no repitas el mismo dos veces seguidas.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 15 HOOKS -->
+<section id="hooks" class="bb-section">
+  <span class="eyebrow">15 · Hooks <span class="note-new">nuevo</span></span>
+  <h2 class="section-title">Los primeros <em>tres segundos</em></h2>
+  <p class="section-intro">Fórmulas probadas con el tono LECI: directas, sin hype y con un dato o una tensión concreta. Tocá “Usar” para cargarla en el Estudio y editarla.</p>
+  <div class="section-body">
+    <div class="g3" id="hookCards"></div>
+    <div class="usage-note"><p><strong>Regla:</strong> el hook se lee en menos de 2 segundos (máximo 8 palabras). La palabra clave va en Bricolage 800 y el resto en 400. Nada de “¡Increíble!” ni signos de exclamación.</p></div>
+  </div>
+</section>
+
+<!-- 16 PORTADAS -->
+<section id="portadas" class="bb-section">
+  <span class="eyebrow">16 · Portadas de Reels <span class="note-new">nuevo</span></span>
+  <h2 class="section-title">Un feed que se lee <em>de un vistazo</em></h2>
+  <p class="section-intro">La portada se diseña en 9:16, pero en tu perfil Instagram la recorta a 3:4. Todo el texto tiene que vivir dentro de la zona central (línea ciruela punteada).</p>
+  <div class="section-body">
+    <div style="display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap">
+      <button class="btn" id="feedToggle">Ver portada completa 9:16</button>
+    </div>
+    <div class="feed-layout">
+      <div class="feed" id="feed"></div>
+      <div class="card">
+        <h4>Reglas de la grilla</h4>
+        <ul>
+          <li>Patrón de fondos que rota: crema → foto → olive.</li>
+          <li>Texto siempre en el centro vertical, dentro del 3:4.</li>
+          <li>Una sola palabra en 800 o resaltada por portada.</li>
+          <li>El @handle y el isotipo quedan fuera del recorte: en la grilla no se ven, en el reel sí.</li>
+          <li>Portada = el hook del video. No inventes otro título.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 17 STICKERS -->
+<section id="stickers" class="bb-section">
+  <span class="eyebrow">17 · Stickers <span class="note-new">nuevo</span></span>
+  <h2 class="section-title">Elementos <em>para Stories y Reels</em></h2>
+  <p class="section-intro">Pequeños elementos animados para dirigir la mirada: flechas que se dibujan, etiquetas que caen, sellos que giran y chips de dato. Usá uno o dos por pieza, nunca todos juntos.</p>
+  <div class="section-body">
+    <div class="demo-grid">
+      <div class="demo" data-scene="stickers" data-bg="crema" data-fmt="9:16" data-title="Set de stickers · crema"></div>
+      <div class="demo" data-scene="stickers" data-bg="foto" data-fmt="9:16" data-title="Set de stickers · foto"></div>
+    </div>
+    <div class="g4" style="margin-top:18px">
+      <div class="card"><h4>Flecha</h4><p>Trazo a mano alzada, 9 px, se dibuja en 0,9 s. Señala el dato o el CTA.</p></div>
+      <div class="card"><h4>Etiqueta ciruela</h4><p>“Nuevo”, “Caso real”, “Tip”. Entra con pop (curva de acento) y girada −6°.</p></div>
+      <div class="card"><h4>Sello giratorio</h4><p>“CASO 01 · LECI ESTUDIO”. Gira lento (14 s por vuelta). Sirve para casos y series.</p></div>
+      <div class="card"><h4>Chip de dato y “Deslizá”</h4><p>Pill blanca con flecha que se mueve. Para carruseles y llamadas a la acción.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 18 KIT DE VIDEO -->
+<section id="video" class="bb-section">
+  <span class="eyebrow">18 · Kit de video <span class="note-new">nuevo</span></span>
+  <h2 class="section-title">Formatos, zonas seguras <em>y subtítulos</em></h2>
+  <p class="section-intro">Lo técnico para que cada video salga bien de entrada: el tamaño correcto, el texto donde no lo tapan los botones y subtítulos que se lean.</p>
+  <div class="section-body">
+    <div class="sub">Formatos</div>
+    <div class="fmt-row">
+      <div class="fmt"><i style="width:72px;height:128px"></i><b>9:16 · 1080×1920</b><span>Reels, TikTok, Stories</span></div>
+      <div class="fmt"><i style="width:96px;height:120px"></i><b>4:5 · 1080×1350</b><span>Feed, carruseles</span></div>
+      <div class="fmt"><i style="width:110px;height:110px"></i><b>1:1 · 1080×1080</b><span>Anuncios, LinkedIn</span></div>
+      <div class="fmt"><i style="width:192px;height:108px"></i><b>16:9 · 1920×1080</b><span>YouTube, presentaciones</span></div>
+    </div>
+    <div class="usage-note"><p><strong>Exportación en CapCut:</strong> 1080p · 30 fps (60 si hay mucho movimiento de pantalla) · bitrate “Más alto” · MP4 H.264.</p></div>
+
+    <div class="sub">Zonas seguras · 9:16</div>
+    <div class="g2">
+      <div class="demo" data-scene="hook" data-bg="olive" data-fmt="9:16" data-safe="1" data-static="1" data-title="Hook con zonas seguras"></div>
+      <div class="card" style="align-self:start">
+        <h4>Medidas aprox. (1080×1920)</h4>
+        <table class="tbl">
+          <tr><td>Arriba</td><td><code>250 px</code></td><td>Usuario, cámara, pestañas</td></tr>
+          <tr><td>Abajo</td><td><code>420 px</code></td><td>Caption, audio, CTA de anuncio</td></tr>
+          <tr><td>Derecha</td><td><code>150 px</code></td><td>Like, comentar, compartir</td></tr>
+          <tr><td>Izquierda</td><td><code>60 px</code></td><td>Margen de respiro</td></tr>
+        </table>
+        <p style="margin-top:12px">TikTok tapa un poco más abajo (≈480 px). Si el video va a las dos redes, usá la medida de TikTok.</p>
+      </div>
+    </div>
+
+    <div class="sub">Subtítulos de marca</div>
+    <div class="demo-grid">
+      <div class="demo" data-scene="captions" data-bg="foto" data-fmt="9:16" data-p='{"estilo":"caja"}' data-title="Caja blanca · principal"></div>
+      <div class="demo" data-scene="captions" data-bg="foto" data-fmt="9:16" data-p='{"estilo":"activa"}' data-title="Palabra activa · alternativa"></div>
+      <div class="card" style="align-self:start">
+        <h4>Reglas</h4>
+        <ul>
+          <li>Open Sans 800, 60–70 px.</li>
+          <li>Máximo 4 palabras por bloque y 2 líneas.</li>
+          <li>Centrados, a 520 px del borde de abajo.</li>
+          <li>Palabra activa: caja olive o texto verde claro.</li>
+          <li>En CapCut: Texto → Subtítulos automáticos, y después aplicás el estilo guardado como plantilla.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sub">Estructura de un reel · 30 s</div>
+    <div class="timeline">
+      <div style="flex:3;background:#9C4A63"><b>0–3 s</b>Hook</div>
+      <div style="flex:7;background:#5E6B43"><b>3–10 s</b>Problema</div>
+      <div style="flex:15;background:#7A8A59"><b>10–25 s</b>Valor / prueba</div>
+      <div style="flex:5;background:#3D3D3D"><b>25–30 s</b>CTA</div>
+    </div>
+    <div class="tl-legend">
+      <p><b>Hook</b>La frase de la portada, animada. Sin logo ni intro.</p>
+      <p><b>Problema</b>La tensión: qué está fallando o qué no sabe el cliente.</p>
+      <p><b>Valor / prueba</b>El método, el dato animado, el antes y después.</p>
+      <p><b>CTA</b>Una sola acción. End card con logo y sonido.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 19 SONIDO -->
+<section id="sonido" class="bb-section">
+  <span class="eyebrow">19 · Sonido <span class="note-new">nuevo</span></span>
+  <h2 class="section-title">Cómo <em>suena</em> LECI</h2>
+  <p class="section-intro">Un logo sonoro de tres notas que acompaña al isotipo: grave para la L, media para la C y un brillo para el punto. Debajo, la música y la mezcla de los videos.</p>
+  <div class="section-body">
+    <div class="sound-card">
+      <i data-iso="cream" style="width:90px"></i>
+      <div class="wave" id="wave"></div>
+      <button class="btn primary" id="playSonic">▶ Escuchar logo sonoro</button>
+    </div>
+    <div class="g3" style="margin-top:18px">
+      <div class="card"><h4>Música</h4><ul><li>Minimal house, lo-fi suave, deep</li><li>90–120 BPM, sin voces</li><li>Que acompañe, no que protagonice</li><li>Nada de audios virales con letra encima de la voz</li></ul></div>
+      <div class="card"><h4>Mezcla en CapCut</h4><ul><li>Voz: el elemento más fuerte</li><li>Música: unos 15–20 dB debajo de la voz (en CapCut, volumen al 10–20%)</li><li>Reducción de ruido activada en la voz</li><li>Fade in/out de la música: 0,5 s</li></ul></div>
+      <div class="card"><h4>Efectos</h4><ul><li>“Whoosh” suave en transiciones de marca</li><li>“Tick” en números que cuentan</li><li>“Pop” en stickers y etiquetas</li><li>Máximo un efecto cada 3 segundos</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- 20 FOTO Y VIDEO -->
+<section id="foto" class="bb-section">
+  <span class="eyebrow">20 · Foto y video <span class="note-new">nuevo</span></span>
+  <h2 class="section-title">Escritorio real, <em>luz natural</em></h2>
+  <p class="section-intro">La fotografía de LECI muestra el trabajo de verdad: manos en el teclado, cuadernos, café y plantas. Luz de ventana, colores cálidos y verdes apagados. Nada de bancos de imágenes con gente sonriendo a cámara.</p>
+  <div class="section-body">
+    <div class="g4">
+      <div class="card"><h4>Luz</h4><ul><li>Luz de ventana lateral</li><li>Mañana o tarde: cálida</li><li>Sombras suaves, no planas</li><li>Nunca flash directo</li></ul></div>
+      <div class="card"><h4>Escenas</h4><ul><li>Laptop y manos</li><li>Cuaderno con anotaciones</li><li>Café o mate en mesa de madera</li><li>Plantas, ventanas, bares tranquilos</li></ul></div>
+      <div class="card"><h4>Encuadres</h4><ul><li>Detalle cercano (manos, pantalla)</li><li>Cenital de escritorio</li><li>Por encima del hombro</li><li>Dejá aire para el texto</li></ul></div>
+      <div class="card"><h4>Paleta de escena</h4><p>Madera, crema, verde planta, negro laptop.</p><div class="swatches"><i style="background:#8B6B4A"></i><i style="background:#E8E4DE"></i><i style="background:#56693A"></i><i style="background:#2A2A2E"></i><i style="background:#C9B79C"></i></div></div>
+    </div>
+    <div class="sub">Color en CapCut · punto de partida</div>
+    <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1.3fr);gap:16px;align-items:start" class="grade-layout">
+      <div class="grade"><div class="scene"></div><span class="lbl">ANTES</span></div>
+      <div class="grade after"><div class="scene"></div><span class="lbl">LECI</span></div>
+      <div class="card" style="background:var(--surface)">
+        <h4>Ajustes (Ajustar → Básico)</h4>
+        <table class="tbl">
+          <tr><td>Temperatura</td><td><code>+8</code></td></tr>
+          <tr><td>Saturación</td><td><code>−12</code></td></tr>
+          <tr><td>Contraste</td><td><code>−6</code></td></tr>
+          <tr><td>Luces</td><td><code>−10</code></td></tr>
+          <tr><td>Sombras</td><td><code>+8</code></td></tr>
+          <tr><td>Grano</td><td><code>8</code></td></tr>
+          <tr><td>Viñeta</td><td><code>10</code></td></tr>
+        </table>
+        <p style="font-size:12px;color:var(--ink-light);margin-top:10px">Son valores de partida: ajustalos a ojo según la luz de cada toma. Guardalos como ajuste preestablecido en CapCut para aplicarlos en un clic.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 21 ESTUDIO -->
+<section id="estudio" class="bb-section" style="max-width:1200px;border-bottom:none">
+  <span class="eyebrow">21 · Estudio de grabación <span class="note-new">nuevo</span></span>
+  <h2 class="section-title">Elegí, editá <em>y grabá</em></h2>
+  <p class="section-intro">Elegí una pieza, cambiá textos y números, elegí el fondo y grabala. Para superponerla en CapCut usá el <b>chroma azul</b>: el verde se come los olive de la marca.</p>
+  <div class="section-body">
+    <div class="studio">
+      <div class="ctl" id="ctl">
+        <label>Pieza<select id="sScene"></select></label>
+        <div class="row">
+          <label style="flex:1">Formato<select id="sFmt"><option>9:16</option><option>4:5</option><option>1:1</option><option>16:9</option></select></label>
+          <label style="flex:1">Ritmo<select id="sK"><option value="1.25" selected>Calmo · base</option><option value="1">Estándar</option><option value="0.75">Enérgico</option></select></label>
+        </div>
+        <label>Fondo<select id="sBg">
+          <option value="crema">Crema</option><option value="olive">Olive</option><option value="negro">Negro</option><option value="papel">Papel</option><option value="foto">Foto (placeholder)</option>
+          <option value="azul">Chroma azul · para CapCut</option><option value="verde">Chroma verde</option><option value="upload">Subir foto o video…</option>
+        </select></label>
+        <input type="file" id="sFile" accept="image/*,video/*" hidden>
+        <div id="sFields" style="display:flex;flex-direction:column;gap:10px"></div>
+        <label class="chk"><input type="checkbox" id="sSafe"> Mostrar zonas seguras</label>
+        <label class="chk"><input type="checkbox" id="sSound" checked> Sonido de marca (logo)</label>
+        <div class="row">
+          <button class="btn primary" id="sPlay">▶ Reproducir</button>
+          <button class="btn" id="sFull">⛶ Pantalla completa</button>
+          <button class="btn rec" id="sRec">● Grabar video</button>
+        </div>
+        <details class="capcut" open><summary>Cómo usarlo en CapCut</summary><div id="sCap"></div></details>
+      </div>
+      <div class="studio-stage-wrap"><div class="stage" id="studioStage"></div></div>
+    </div>
+    <div class="g2" style="margin-top:22px">
+      <div class="card"><h4>Opción A · Grabar desde acá (Chrome)</h4><p>Tocá <b>● Grabar video</b>, elegí <b>“Esta pestaña”</b> y se graba solo el escenario. Al terminar se descarga el archivo (MP4 si tu Chrome lo permite, si no WEBM). La calidad depende del tamaño en pantalla: para 9:16 en calidad máxima usá la opción B.</p></div>
+      <div class="card"><h4>Opción B · OBS o grabador de pantalla</h4><p>Tocá <b>⛶ Pantalla completa</b>, iniciá la grabación en OBS y apretá <b>Espacio</b> para reproducir. <b>R</b> repite y <b>Esc</b> sale. El cursor se oculta solo. En CapCut recortás el video al formato que corresponda.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 22 DESCARGAS -->
+<section id="descargas" class="bb-section" style="max-width:1200px;border-bottom:none">
+  <span class="eyebrow">22 · Descargas <span class="note-new">nuevo</span></span>
+  <h2 class="section-title">Todo listo <em>para usar</em></h2>
+  <p class="section-intro">Los archivos de marca, en las carpetas de <code>branding</code> junto a este brandbook. Tocá cualquier archivo para abrirlo. Si movés el brandbook a otra carpeta, llevate también las carpetas para que los links sigan funcionando.</p>
+  <div class="section-body" id="dl"></div>
+</section>
+</main>
+
+<div class="studio-full" id="fullWrap"><div class="stage" id="fullStage"></div><div class="studio-hint" id="fullHint">ESPACIO reproducir · R repetir · ESC salir</div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ─── utilidades ─── */
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const nf=(v,dec)=>v.toLocaleString('es-AR',{minimumFractionDigits:dec,maximumFractionDigits:dec});
+function toast(t,ms=2600){const el=$('#toast');el.textContent=t;el.classList.add('on');clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove('on'),ms)}
+
+/* ─── logos vectoriales (de leci-isotipo.svg y leci-lockup.svg) ─── */
+const ISO_P={"C":"M107.5,83.0C111.8,82.7 116.7,81.6 120.6,79.9C122.2,79.3 125.7,77.5 127.2,76.5C130.7,74.3 134.1,71.5 136.5,68.8C137.6,67.7 139.0,65.9 138.9,65.8C138.8,65.8 138.3,66.3 137.7,67.0C133.3,71.4 127.9,75.1 122.6,77.4C119.6,78.7 115.7,79.7 112.3,80.2C110.7,80.4 105.2,80.4 103.7,80.2C99.4,79.6 95.9,78.5 92.3,76.7C86.0,73.5 81.1,68.5 77.9,62.1C76.5,59.2 75.6,56.2 75.0,52.5C74.7,50.5 74.7,44.3 75.0,42.1C76.6,31.9 82.2,22.6 90.1,17.4C94.0,14.7 98.9,13.0 103.6,12.4C105.2,12.3 109.0,12.3 110.6,12.4C119.4,13.4 127.3,17.0 133.0,22.6C133.9,23.5 134.8,24.4 135.0,24.6C135.6,25.4 135.4,24.9 134.7,23.8C130.3,16.8 120.8,11.6 109.7,10.2C106.2,9.8 101.1,9.9 97.6,10.4C86.4,12.0 76.0,18.8 69.4,28.8C66.2,33.7 64.5,38.3 63.8,44.2C63.5,46.3 63.6,51.3 63.9,53.5C64.7,58.9 66.9,64.0 70.3,68.3C71.5,69.8 73.6,72.1 75.3,73.5C76.7,74.6 79.8,76.7 81.5,77.7C86.9,80.7 93.5,82.6 100.1,83.1C101.5,83.2 106.0,83.2 107.5,83.0Z","L":"M99.3,99.9C110.6,99.1 122.1,94.5 131.9,86.5C133.1,85.5 135.8,83.0 135.8,83.0C135.7,82.9 135.4,83.1 135.0,83.5C133.7,84.4 129.6,87.1 127.7,88.2C120.8,92.1 114.5,94.3 107.3,95.3C105.1,95.6 99.7,95.6 97.7,95.3C94.2,94.8 91.1,93.8 88.0,92.4C85.9,91.5 84.5,90.7 80.5,88.3C78.9,87.4 77.1,86.3 76.4,86.0C66.4,80.3 56.7,77.9 44.3,77.9C36.9,77.9 32.0,78.5 27.0,80.1C26.0,80.4 25.1,80.7 25.1,80.7C25.0,80.7 25.0,64.5 25.0,44.7C25.0,9.7 25.0,8.8 25.2,7.9C25.6,6.5 26.0,5.7 27.1,4.6C28.5,3.3 30.2,2.5 32.8,1.9C34.1,1.6 36.7,1.3 37.7,1.3L38.3,1.3L38.3,0.6L38.3,0.0L19.8,0.0L1.3,0.0L1.3,0.6L1.3,1.2L2.3,1.3C3.7,1.4 6.0,2.0 7.1,2.6C9.2,3.6 10.7,5.3 11.3,7.4C11.5,8.2 11.5,10.6 11.5,42.8C11.6,66.0 11.5,77.9 11.4,78.9C11.3,80.8 10.8,82.6 10.1,84.0C8.5,87.2 6.1,89.1 1.6,90.8C0.1,91.4 0.1,91.4 0.1,91.8C0.1,92.0 0.2,92.2 0.2,92.2C0.4,92.4 2.9,91.5 8.1,89.3C12.8,87.3 16.4,85.9 19.3,85.0C22.8,83.9 27.6,82.9 31.6,82.4C33.4,82.2 41.1,82.2 43.1,82.4C52.3,83.4 58.3,85.5 68.3,91.1C72.2,93.3 74.6,94.6 76.8,95.6C84.4,98.9 91.8,100.4 99.3,99.9Z","D":"M109.1,53.0C111.5,52.6 113.7,50.3 114.1,47.8C114.4,45.7 113.4,43.5 111.5,42.2C107.8,39.8 102.7,42.0 102.1,46.4C101.5,50.4 105.1,53.8 109.1,53.0Z"}, LK_P={"L":"M78.2,83.6C81.6,83.2 85.6,82.3 87.8,81.5C87.9,81.4 88.1,81.4 88.2,81.4C88.2,81.4 88.3,81.4 88.3,81.3C88.3,81.2 88.5,81.1 88.7,81.1C89.5,81.1 95.6,78.2 96.5,77.5C96.6,77.3 97.2,77.0 97.8,76.6C98.8,76.1 99.1,75.8 98.8,75.5C98.7,75.4 97.7,75.9 96.6,76.4C90.1,79.8 84.6,81.0 77.4,80.8C72.6,80.7 69.3,80.1 63.9,78.5C59.7,77.3 55.9,75.7 47.7,71.7C40.2,68.0 37.0,66.8 32.1,65.8C28.5,65.1 26.0,64.9 21.6,65.0C17.5,65.1 14.5,65.5 11.2,66.3C10.1,66.6 9.2,66.8 9.1,66.8C8.8,66.8 8.8,3.7 9.1,2.7C9.4,2.0 10.2,1.0 10.9,0.6C11.1,0.5 11.2,0.3 11.1,0.2C10.7,-0.1 -0.0,-0.0 0.0,0.3C0.0,0.4 0.3,0.6 0.7,0.8C1.0,1.0 1.5,1.5 1.8,2.0L2.3,2.9L2.4,35.2C2.4,58.1 2.4,67.7 2.2,68.4C2.1,69.1 1.8,69.6 1.4,70.0C0.8,70.6 0.6,71.1 0.9,71.1C0.9,71.1 1.2,70.9 1.5,70.8C2.4,70.4 5.2,69.4 5.6,69.3C5.7,69.3 6.6,69.0 7.6,68.8C9.2,68.3 10.4,68.1 13.4,67.8C15.4,67.5 21.7,67.6 23.9,68.0C27.2,68.5 32.1,69.8 34.0,70.7C34.2,70.8 35.6,71.4 37.1,72.0C38.6,72.7 41.6,74.1 43.7,75.2C48.0,77.3 48.1,77.3 50.2,78.2C51.0,78.6 52.1,79.1 52.6,79.3C54.0,79.9 58.7,81.5 61.3,82.2C67.0,83.7 72.7,84.2 78.2,83.6Z","E":"M98.8,67.3C98.9,66.4 98.9,65.5 98.8,65.4C98.7,65.2 98.5,65.2 97.6,65.5C97.1,65.7 95.7,66.0 94.7,66.2C90.7,67.0 88.5,67.2 80.0,67.3L71.8,67.4L71.8,52.8L71.8,38.3L73.1,38.1C73.7,38.1 76.6,38.1 79.4,38.1C84.5,38.2 87.8,38.5 89.5,39.1C90.0,39.2 90.5,39.3 90.5,39.3C90.5,39.3 90.5,38.6 90.5,37.6L90.5,35.9L89.1,36.1C88.3,36.1 86.7,36.3 85.5,36.4C84.4,36.5 80.8,36.5 77.6,36.5L71.8,36.5L71.8,22.6L71.8,8.7L80.0,8.8C88.9,8.9 91.0,9.0 95.3,10.1C96.3,10.4 97.3,10.7 97.5,10.7C98.0,10.8 98.0,10.8 97.9,9.0L97.9,7.1L81.0,7.1C71.8,7.1 64.2,7.1 64.2,7.2C64.2,7.3 64.4,7.5 64.6,7.7C65.5,8.6 65.5,7.2 65.5,38.0C65.5,69.0 65.5,67.7 64.6,68.3C63.4,69.0 63.6,69.0 81.5,69.0L98.8,68.9L98.8,67.3Z","I":"M199.1,69.2C199.1,69.1 198.8,68.8 198.5,68.5C198.2,68.3 197.9,67.8 197.8,67.4C197.5,66.4 197.5,10.1 197.8,9.3C197.9,8.9 198.2,8.4 198.5,8.1C198.8,7.8 199.1,7.4 199.1,7.4C199.1,7.3 197.1,7.2 194.6,7.2C190.3,7.2 189.7,7.3 190.5,7.8C190.7,7.9 191.0,8.3 191.3,8.8L191.7,9.6L191.7,38.3C191.7,69.4 191.7,67.8 190.7,68.6C190.4,68.8 190.2,69.1 190.2,69.2C190.2,69.3 191.7,69.4 194.6,69.4C197.7,69.4 199.1,69.3 199.1,69.2Z","ESTUDIO":"M56.6,99.8C57.5,99.6 58.3,98.7 58.3,98.0C58.3,97.1 57.6,96.5 56.2,96.1C55.4,95.9 54.7,95.6 54.6,95.5C54.2,95.1 54.5,94.5 55.1,94.3C55.8,94.1 56.4,94.2 56.7,94.8C57.0,95.2 57.2,95.4 57.5,95.3C57.9,95.3 58.0,95.2 57.9,94.8C57.8,93.9 57.1,93.4 55.8,93.4C54.6,93.3 54.5,93.3 53.9,93.9C52.7,95.1 53.2,96.4 55.2,96.9C55.7,97.1 56.2,97.2 56.3,97.2C56.6,97.2 57.1,97.7 57.1,98.1C57.1,98.6 56.6,98.9 55.7,98.9C54.8,98.9 54.2,98.5 54.2,98.0C54.2,97.9 54.0,97.8 53.6,97.8C53.1,97.8 53.0,97.8 53.1,98.3C53.5,99.6 55.0,100.3 56.6,99.8ZM99.4,99.5C100.2,98.9 100.4,98.4 100.4,95.8L100.4,93.3L99.9,93.4L99.4,93.4L99.3,95.8C99.2,98.7 99.1,98.9 97.8,98.9C96.5,98.9 96.4,98.7 96.3,95.8L96.2,93.4L95.7,93.4L95.3,93.4L95.3,96.0C95.3,98.6 95.3,98.7 95.7,99.2C96.0,99.4 96.4,99.7 96.7,99.8C97.5,100.1 98.9,99.9 99.4,99.5ZM161.1,99.4C162.0,98.9 162.4,98.2 162.5,96.9C162.5,95.8 162.5,95.5 162.1,94.8C161.6,93.8 160.7,93.3 159.5,93.3C157.6,93.3 156.4,94.6 156.4,96.6C156.4,98.2 156.9,99.1 158.3,99.7C159.1,100.1 160.3,100.0 161.1,99.4ZM37.1,99.4C37.1,98.9 37.1,98.9 35.3,98.9L33.6,98.9L33.6,98.0L33.6,97.0L35.2,97.0L36.8,97.0L36.7,96.5C36.6,96.0 36.6,96.0 35.5,96.0C33.5,96.0 33.6,96.0 33.5,95.2L33.5,94.4L35.2,94.4C37.0,94.3 37.0,94.3 37.0,93.9L37.0,93.4L34.7,93.4L32.5,93.3L32.5,96.6L32.5,99.8L34.8,99.8L37.1,99.8L37.1,99.4ZM77.1,97.1L77.1,94.5L78.1,94.4C79.0,94.3 79.1,94.3 79.1,93.9L79.1,93.4L76.6,93.4L74.0,93.3L74.0,93.9C74.0,94.4 74.0,94.4 75.0,94.4L76.1,94.4L76.1,97.1L76.1,99.8L76.6,99.8L77.1,99.7L77.1,97.1ZM121.3,99.3C123.0,98.0 122.9,94.8 121.1,93.8C120.7,93.5 120.1,93.4 118.8,93.4L117.1,93.3L117.0,95.3C117.0,96.4 117.0,97.9 117.0,98.6L117.1,99.8L118.9,99.8C120.4,99.7 120.8,99.7 121.3,99.3ZM140.1,96.6L140.1,93.3L139.6,93.4L139.1,93.4L139.0,96.6L139.0,99.8L139.5,99.8L140.1,99.8L140.1,96.6ZM118.2,96.7L118.2,94.4L119.3,94.4C120.6,94.4 121.1,94.8 121.3,95.9C121.8,97.7 120.8,98.9 119.1,98.9L118.2,98.9L118.2,96.7ZM158.1,98.5C157.7,98.1 157.6,97.8 157.6,97.0C157.4,94.9 158.6,93.8 160.4,94.4C161.7,94.9 161.7,98.0 160.5,98.7C159.8,99.0 158.7,98.9 158.1,98.5Z","C":"M152.4,68.9C158.0,67.7 162.9,65.0 166.8,61.0C168.3,59.5 169.1,58.5 168.9,58.3C168.9,58.1 168.3,58.6 167.5,59.3C162.5,63.9 157.3,66.6 151.3,67.7C150.3,67.8 148.5,68.0 146.6,68.0C143.3,68.0 141.0,67.6 138.2,66.8C126.2,62.9 118.4,51.8 118.4,38.5C118.4,27.3 123.9,17.1 132.8,12.0C136.9,9.7 141.2,8.5 146.1,8.5C154.2,8.5 160.9,11.2 166.6,16.8C167.9,18.1 168.8,18.9 168.9,18.7C169.2,18.3 166.7,15.4 164.7,13.8C160.6,10.3 155.8,8.1 150.9,7.3C141.0,5.9 131.8,8.1 124.6,13.7C119.3,17.8 115.1,24.3 113.4,31.0C110.6,42.0 114.3,53.8 122.8,61.4C126.7,64.8 131.9,67.5 137.2,68.7C140.3,69.4 141.5,69.6 146.0,69.5C149.8,69.5 150.4,69.4 152.4,68.9Z","D":"M148.5,42.1C151.3,40.1 151.0,36.1 148.0,34.7C144.9,33.3 141.5,36.2 142.3,39.5C142.8,41.6 144.2,42.7 146.4,42.7C147.5,42.7 147.7,42.6 148.5,42.1Z"};
+function iso(variant='olive',anim=false,d0=0){
+  return `<svg class="iso${variant==='cream'?' cream':''}${anim?' anim':''}" viewBox="-6 -6 150.94 112" style="--d0:${d0}ms" role="img" aria-label="Isotipo LECI">
+    <path class="o pl" d="${ISO_P.L}"/><path class="o pc" d="${ISO_P.C}"/><path class="d pd" d="${ISO_P.D}"/></svg>`;
+}
+function lockup(variant='olive',anim=false,d0=0,estudio=true){
+  return `<svg class="lk${variant==='cream'?' cream':''}${anim?' anim':''}" viewBox="-2 -2 203.07 ${estudio?104:76}" style="--d0:${d0}ms" role="img" aria-label="LECI Estudio">
+    <path class="o lL" d="${LK_P.L}"/><path class="o lE" d="${LK_P.E}"/><path class="c lC" d="${LK_P.C}"/><path class="o lI" d="${LK_P.I}"/><path class="d lD" d="${LK_P.D}"/>${estudio?`<path class="o lS" d="${LK_P.ESTUDIO}"/>`:''}</svg>`;
+}
+$$('[data-iso]').forEach(s=>{s.outerHTML=iso(s.dataset.iso,!!s.dataset.anim).replace('<svg ',`<svg style="${s.getAttribute('style')||''}" `)});
+$$('[data-lk]').forEach(s=>{s.outerHTML=lockup(s.dataset.lk,!!s.dataset.anim,0,s.dataset.estudio!=='no').replace('<svg ',`<svg style="${s.getAttribute('style')||''}" `)});
+
+/* ─── escenas ─── */
+const FMT={'9:16':[1080,1920,'f916'],'4:5':[1080,1350,'f45'],'1:1':[1080,1080,'f11'],'16:9':[1920,1080,'f169']};
+const DARK={crema:0,papel:0,olive:1,negro:1,foto:1,azul:1,verde:1,upload:1};
+const isoVar=bg=>['olive','azul','verde','upload','foto'].includes(bg)?'cream':'olive';
+function words(t,d0,step){const ws=esc(t).split(/\s+/).filter(Boolean);return{h:ws.map((w,i)=>`<span class="wm"><span class="a" style="--an:up;--t:800ms;--d:${d0+i*step}ms">${w}</span></span>`).join(' '),n:ws.length}}
+const foot=(bg,d)=>`<div class="sc-foot a" style="--an:fade;--d:${d}ms"><span>@leci.estudio</span>${iso(isoVar(bg))}</div>`;
+const clipSvg=`<svg class="clip" viewBox="0 0 60 130"><use href="#clip-sym"/></svg>`;
+
+const S={
+  hook:{n:'Hook · título animado',fmt:'9:16',bg:'crema',dur:3600,
+    f:[['eyebrow','Etiqueta superior','Caso de éxito'],['pre','Contexto (liviano)','Este negocio'],['key','Palabra clave (800)','triplicó ventas'],['post','Cierre (liviano)','en un mes.'],['tag','Etiqueta blanca','Y así lo conseguimos.'],['hl','Resaltado olive','no',['no','si']]],
+    r(p,bg){const w=words(p.key,280,90);const e=280+w.n*90;
+      const key=p.hl==='si'?`<span class="hl" style="--d:${e+100}ms">${w.h}</span>`:w.h;
+      return `<div class="sc"><div class="sc-top a" style="--an:fade">${esc(p.eyebrow)}</div><div>
+        <div class="h-pre a" style="--d:120ms">${esc(p.pre)}</div><div class="h-key">${key}</div>
+        <div class="h-post a" style="--d:${e+80}ms">${esc(p.post)}</div>
+        ${p.tag?`<div class="h-tag a" style="--an:tagin;--e:var(--ease-acento);--t:650ms;--d:${e+600}ms">${esc(p.tag)}</div>`:''}</div>${foot(bg,e+900)}</div>`},
+    cc:p=>`<b>Duración:</b> 3,5 s.<br><b>Contexto:</b> keyframe 0,1 s → Y +46 y opacidad 0; 0,8 s → Y 0 y opacidad 100. Suavizado: <code>ease out</code>.<br><b>Palabra clave:</b> una capa de texto por palabra, cada una 0,09 s después de la anterior. Entrada “Deslizar hacia arriba” con máscara, o Y +100% → 0 en 0,8 s.<br><b>Resaltado:</b> rectángulo olive detrás del texto; escala X 0 → 100% en 0,65 s con anclaje a la izquierda.<br><b>Etiqueta:</b> entrada “Rebote” o escala 90% → 100% más rotación −8° → −3° en 0,65 s.`},
+  note:{n:'Nota con clip',fmt:'9:16',bg:'foto',dur:3400,
+    f:[['eye','Arriba','Mi error'],['key','Palabra clave','más caro'],['post','Abajo','manejando campañas'],['tag','Etiqueta','Y fue por esto…']],
+    r(p,bg){return `<div class="sc sc-note"><div class="sc-top a" style="--an:fade">@leci.estudio</div><div class="sc-mid">
+      <div class="note a" style="--an:drop;--t:900ms"><span class="a" style="--an:pop;--e:var(--ease-acento);--t:500ms;--d:600ms;position:absolute;top:-58px;left:70px;width:62px">${clipSvg}</span>
+        <div class="n-eye a" style="--d:500ms">${esc(p.eye)}</div><div class="n-key a" style="--d:620ms">${esc(p.key)}</div><div class="n-post a" style="--d:740ms">${esc(p.post)}</div></div>
+      ${p.tag?`<div class="n-tag a" style="--an:tagin;--e:var(--ease-acento);--t:650ms;--d:1300ms">${esc(p.tag)}</div>`:''}</div>${foot(bg,1500)}</div>`},
+    cc:p=>`<b>Duración:</b> 3,4 s.<br><b>Nota:</b> una imagen PNG del papel, keyframe 0 s → Y −140 y rotación −9°; 0,9 s → Y 0 y rotación −2,5°. <code>ease out</code>.<br><b>Clip:</b> sticker o PNG; escala 40% → 100% en 0,5 s con rebote (0,6 s).<br><b>Textos:</b> suben escalonados cada 0,12 s.<br><b>Etiqueta:</b> entra a los 1,3 s con rebote.`},
+  kpi:{n:'KPI con contador',fmt:'9:16',bg:'negro',dur:3200,
+    f:[['label','Métrica','ROAS del mes'],['value','Valor','4.2'],['dec','Decimales','1'],['prefix','Prefijo',''],['suffix','Sufijo','×'],['delta','Variación','↑ +0,8 vs mes anterior']],
+    r(p,bg){return `<div class="sc"><div class="sc-top a" style="--an:fade">Resultados</div><div>
+      <div class="kpi-lbl a">${esc(p.label)}</div>
+      <div class="kpi-big a" style="--d:150ms">${esc(p.prefix)}<span data-count="${parseFloat(String(p.value).replace(',','.'))||0}" data-dec="${+p.dec||0}" data-delay="250">0</span><small>${esc(p.suffix)}</small></div>
+      <div class="pill a" style="--an:tagin;--e:var(--ease-acento);--t:600ms;--d:1600ms">${esc(p.delta)}</div>
+      <svg class="spark" viewBox="0 0 900 220" preserveAspectRatio="none"><path class="a" pathLength="1" style="--an:draw;--t:1400ms;--d:300ms;--e:var(--ease-preciso)" d="M0 200 C120 190 160 150 260 160 S420 120 500 110 S700 40 900 20"/></svg>
+      </div>${foot(bg,1800)}</div>`},
+    cc:p=>`<b>Duración:</b> 3,2 s.<br><b>Número:</b> CapCut no tiene contador nativo. Opción 1: grabalo acá con chroma azul. Opción 2: 6 o 7 capas de texto con valores intermedios (0 → 1,2 → 2,6 → 3,5 → 4,0 → 4,2), cada una de 0,2 s, la última fija.<br><b>Línea:</b> entrada “Barrido” de izquierda a derecha en 1,4 s.<br><b>Pill:</b> rebote a los 1,6 s.`},
+  bars:{n:'Gráfico de barras',fmt:'9:16',bg:'crema',dur:3400,
+    f:[['title','Título','Retorno mensual'],['hl','Remate del título','+150%'],['values','Valores (coma)','1.2, 1.6, 1.4, 2.1, 2.5, 3.0'],['labels','Etiquetas (coma)','Jul, Ago, Sep, Oct, Nov, Dic'],['prefix','Prefijo','$'],['suffix','Sufijo','k']],
+    r(p,bg){const v=String(p.values).split(',').map(x=>parseFloat(x)||0),l=String(p.labels).split(','),m=Math.max(...v,1);
+      const b=v.map((x,i)=>`<div class="bar-w"><div class="bar-v a" style="--an:fade;--d:${700+i*90+500}ms">${esc(p.prefix)}${nf(x,1)}${esc(p.suffix)}</div><div class="bar-b a${i===v.length-1?' hi':''}" style="--an:grow;--t:900ms;--d:${700+i*90}ms;height:${x/m*100}%"></div><div class="bar-l">${esc((l[i]||'').trim())}</div></div>`).join('');
+      return `<div class="sc"><div class="ch-title a">${esc(p.title)} <span>${esc(p.hl)}</span></div><div class="bars">${b}</div>${foot(bg,1600)}</div>`},
+    cc:p=>`<b>Duración:</b> 3,4 s.<br><b>Barras:</b> rectángulos con anclaje abajo; escala Y 0 → 100% en 0,9 s, <code>ease out</code>, una cada 0,09 s.<br><b>Valores:</b> fade in 0,5 s después de cada barra.<br><b>La última barra</b> va en ciruela: es el dato del mes.`},
+  line:{n:'Línea de crecimiento',fmt:'9:16',bg:'olive',dur:3600,
+    f:[['title','Título','Ventas en 6 meses'],['values','Valores (coma)','12, 18, 15, 26, 31, 44'],['end','Valor final','+267%']],
+    r(p,bg){const v=String(p.values).split(',').map(x=>parseFloat(x)||0),m=Math.max(...v,1),W=880,H=760;
+      const pts=v.map((x,i)=>[i/(v.length-1||1)*W,H-(x/m)*H*.9]);let d=`M${pts[0][0]} ${pts[0][1]}`;
+      for(let i=1;i<pts.length;i++){const [x0,y0]=pts[i-1],[x1,y1]=pts[i],cx=(x0+x1)/2;d+=` C${cx} ${y0} ${cx} ${y1} ${x1} ${y1}`}
+      const [ex,ey]=pts[pts.length-1];const grid=[.25,.5,.75,1].map(g=>`<line class="gr" x1="0" x2="${W}" y1="${H*g}" y2="${H*g}"/>`).join('');
+      return `<div class="sc"><div class="ch-title a">${esc(p.title)}</div><div style="position:relative">
+        <svg class="line-svg" viewBox="0 0 ${W} ${H}">${grid}<path class="ar a" style="--an:fade;--t:900ms;--d:1300ms" d="${d} L${W} ${H} L0 ${H}Z"/><path class="ln a" pathLength="1" style="--an:draw;--t:1500ms;--d:300ms;--e:var(--ease-preciso)" d="${d}"/></svg>
+        <div class="end-dot a" style="--d:1750ms;left:${ex/W*100}%;top:${ey/H*100}%"></div>
+        <div class="end-val a" style="--an:rise;--d:1900ms;left:${ex/W*100}%;top:${ey/H*100}%">${esc(p.end)}</div></div>${foot(bg,2000)}</div>`},
+    cc:p=>`<b>Duración:</b> 3,6 s.<br><b>Línea:</b> PNG de la línea con entrada “Barrido” de izquierda a derecha en 1,5 s (curva precisa).<br><b>Área:</b> fade in a los 1,3 s.<br><b>Punto ciruela:</b> pop a los 1,75 s. Es el único acento del gráfico.<br><b>Valor final:</b> sube a los 1,9 s.`},
+  funnel:{n:'Embudo',fmt:'9:16',bg:'crema',dur:3400,
+    f:[['title','Título','Del anuncio a la venta'],['steps','Etapas (Nombre:valor, coma)','Alcance:45000, Clics:12600, Mensajes:3150, Ventas:840']],
+    r(p,bg){const st=String(p.steps).split(',').map(s=>{const [a,b]=s.split(':');return[(a||'').trim(),parseFloat(b)||0]}),m=Math.max(...st.map(s=>s[1]),1);
+      const rows=st.map(([a,b],i)=>`<div class="fun-row a" style="--d:${300+i*140}ms"><div class="fun-top">${esc(a)}<b data-count="${b}" data-dec="0" data-delay="${400+i*140}">0</b></div><div class="fun-track"><div class="fun-bar a${i===st.length-1?' hi':''}" style="--an:growx;--t:1000ms;--d:${400+i*140}ms;width:${Math.max(b/m*100,4)}%"></div></div></div>`).join('');
+      return `<div class="sc"><div class="ch-title a">${esc(p.title)}</div><div class="fun">${rows}</div>${foot(bg,1600)}</div>`},
+    cc:p=>`<b>Duración:</b> 3,4 s.<br><b>Barras:</b> anclaje a la izquierda; escala X 0 → 100% en 1 s, una cada 0,14 s.<br><b>Números:</b> grabalos acá (contador) o usá el valor final con fade.<br><b>La última etapa</b> en ciruela.`},
+  lower:{n:'Lower third · nombre',fmt:'16:9',bg:'foto',dur:2400,
+    f:[['name','Nombre','Lean Alfano'],['role','Rol','Estrategia · LECI Estudio']],
+    r(p,bg){return `<div class="sc sc-lower"><div class="lt-wrap"><div class="lt-dot a" style="--an:pop;--e:var(--ease-acento);--t:500ms"></div><div>
+      <div><span class="lt-name a" style="--an:clipin;--t:700ms;--e:var(--ease-preciso);--d:120ms"><span class="a" style="display:inline-block;--d:350ms">${esc(p.name)}</span></span></div>
+      <div><span class="lt-role a" style="--an:clipin;--t:600ms;--e:var(--ease-preciso);--d:380ms"><span class="a" style="display:inline-block;--an:fade;--d:600ms">${esc(p.role)}</span></span></div></div></div></div>`},
+    cc:p=>`<b>Duración:</b> entrada de 1,2 s; dejalo fijo de 3 a 4 s y sacalo con un fade out de 0,3 s.<br><b>Placas:</b> rectángulo crema con entrada “Barrido” a la derecha en 0,7 s; placa olive 0,26 s después.<br><b>Punto ciruela:</b> pop primero.<br><b>Uso:</b> la primera vez que aparece una persona hablando a cámara.`},
+  wipe:{n:'Transición de marca',fmt:'16:9',bg:'negro',dur:1500,f:[],
+    r(p,bg){return `<div class="wp"><i class="w2 a" style="--an:wipe;--t:1300ms;--e:var(--ease-preciso)"></i><i class="w1 a" style="--an:wipe;--t:1300ms;--e:var(--ease-preciso);--d:80ms"></i><i class="w3 a" style="--an:wipe;--t:1300ms;--e:var(--ease-preciso);--d:160ms"></i><i class="w4 a" style="--an:pop;--e:var(--ease-acento);--t:400ms;--d:520ms"></i></div>`},
+    cc:p=>`<b>Duración:</b> 1,3 s.<br><b>En CapCut:</b> grabala con chroma azul y ponela como superposición entre dos clips, con el corte justo en el medio (0,65 s), cuando la pantalla está cubierta de olive.<br><b>Alternativa nativa:</b> transición “Barrido” con un clip de color olive #7A8A59 de 0,4 s en el medio.`},
+  end:{n:'End card · CTA',fmt:'9:16',bg:'olive',dur:3000,
+    f:[['q','Pregunta','¿Querés vender así?'],['cta','CTA','Agendá tu auditoría'],['handle','Handle','@leci.estudio']],
+    r(p,bg){return `<div class="sc sc-end">${iso(isoVar(bg),true,0).replace('class="iso','style="width:300px" class="iso')}
+      <div class="end-q a" style="--d:900ms">${esc(p.q)}</div><div class="cta a" style="--an:tagin;--e:var(--ease-acento);--t:600ms;--d:1300ms">${esc(p.cta)} <i>→</i></div>
+      <div class="sc-top a" style="--an:fade;--d:1600ms">${esc(p.handle)}</div></div>`},
+    cc:p=>`<b>Duración:</b> 3 s más 2 s fijo al final.<br><b>Logo:</b> grabalo acá (se arma) o usá el PNG con fade.<br><b>Pregunta:</b> sube a los 0,9 s.<br><b>CTA:</b> pill con rebote a los 1,3 s; la flecha se mueve en loop.`},
+  logo:{n:'Logo LECI Estudio animado',fmt:'16:9',bg:'crema',dur:3000,sound:1,f:[],
+    r(p,bg){return `<div class="sc sc-logo">${lockup(isoVar(bg),true,0)}</div>`},
+    cc:p=>`<b>Duración:</b> 2,4 s de animación + pausa.<br><b>L + onda:</b> barrido de izquierda a derecha en 1 s (curva precisa).<br><b>E e I:</b> suben 0,7 s, desde 0,2 s y 0,52 s.<br><b>C:</b> gira de −140° a 0° y escala 70% → 100% en 1,1 s, desde 0,36 s.<br><b>Punto:</b> pop a los 1,16 s.<br><b>ESTUDIO:</b> aparece a los 1,52 s y se cierra el espaciado.<br>Lo más fácil: usá los videos de <code>video/logo-leci-estudio</code>.`},
+  iso:{n:'Isotipo + tagline',fmt:'16:9',bg:'crema',dur:2900,sound:1,
+    f:[['tagline','Tagline','Ideas con foco. Marcas con propósito.']],
+    r(p,bg){return `<div class="sc sc-logo">${iso(isoVar(bg),true,0)}<div class="tagline a" style="--an:rise;--d:1520ms;--t:720ms">${esc(p.tagline)}</div></div>`},
+    cc:p=>`<b>Duración:</b> 2,2 s de animación + pausa.<br><b>L + onda:</b> barrido en 1 s.<br><b>C:</b> gira y cierra en 1,1 s, desde 0,35 s.<br><b>Punto ciruela:</b> pop a los 1,15 s.<br><b>Tagline:</b> sube a los 1,52 s.<br>Lo más fácil: usá los videos de <code>video/isotipo-con-tagline</code>.`},
+  stickers:{n:'Set de stickers',fmt:'9:16',bg:'crema',dur:3000,
+    f:[['tag','Etiqueta','Caso real'],['stamp','Centro del sello','01'],['chip','Chip','Deslizá'],['paper','Nota','Tip: probá 3 ángulos antes de escalar.']],
+    r(p,bg){return `<div class="sc" style="padding:0">
+      <div class="sk" style="left:96px;top:180px"><div class="sk-bars">${[0,1,2,3].map(i=>`<span><i class="a" style="--an:growx;--t:900ms;--d:${i*250}ms;${i===3?'transform:scaleX(.4)':''}"></i></span>`).join('')}</div></div>
+      <div class="sk a" style="left:96px;top:330px;--an:tagin;--e:var(--ease-acento);--t:600ms;--d:200ms"><div class="sk-tag">${esc(p.tag)}</div></div>
+      <div class="sk sk-stamp a" style="right:80px;top:420px;--an:pop;--e:var(--ease-acento);--t:600ms;--d:500ms"><svg viewBox="0 0 200 200"><defs><path id="sp" d="M100,100 m-74,0 a74,74 0 1,1 148,0 a74,74 0 1,1 -148,0"/></defs><text textLength="458" lengthAdjust="spacing"><textPath href="#sp">CASO REAL · LECI ESTUDIO · </textPath></text></svg><b>${esc(p.stamp)}</b></div>
+      <div class="sk sk-paper a" style="left:110px;top:820px;--an:drop;--t:800ms;--d:800ms">${clipSvg.replace('class="clip"','class="clip" style="position:absolute;top:-50px;right:50px;width:52px"')}${esc(p.paper)}</div>
+      <svg class="sk sk-arrow" viewBox="0 0 360 260" style="left:560px;top:1100px"><path class="a" pathLength="1" style="--an:draw;--t:900ms;--d:1300ms;--e:var(--ease-preciso)" d="M30 30 C 120 10, 250 60, 260 200 M220 160 L262 210 L300 150"/></svg>
+      <div class="sk a" style="left:50%;transform:translateX(-50%);bottom:300px;--an:rise;--d:1700ms"><div class="sk-swipe">${esc(p.chip)} <i>→</i></div></div></div>`},
+    cc:p=>`<b>En CapCut:</b> grabá el set con chroma azul y recortá cada sticker con “Recortar” para usarlos por separado, o recrealos: etiqueta con rebote, flecha con “Barrido”, sello con rotación 360° por keyframes cada 14&nbsp;s.`},
+  captions:{n:'Subtítulos de marca',fmt:'9:16',bg:'foto',dur:5200,
+    f:[['text','Texto','Antes de subir el presupuesto revisamos el ángulo creativo y después escalamos'],['estilo','Estilo','caja',['caja','activa']]],
+    r(p,bg){return `<div class="sc sc-cap cap-${p.estilo==='activa'?'activa':'caja'}"><div class="cap-line" data-cap="${esc(p.text)}"></div></div>`},
+    after(el,p,k,gen){const box=el.querySelector('.cap-line');if(!box)return;const ws=String(p.text).split(/\s+/).filter(Boolean),ch=[];for(let i=0;i<ws.length;i+=4)ch.push(ws.slice(i,i+4));
+      let ci=0,wi=0;const tick=()=>{if(el._gen!==gen)return;if(ci>=ch.length){return}
+        box.innerHTML=ch[ci].map((w,j)=>`<span class="${j<wi?'':j===wi?'on':'pre'}">${esc(w)}</span>`).join(' ');
+        wi++;if(wi>ch[ci].length){ci++;wi=0;setTimeout(tick,120*k);return}setTimeout(tick,300*k)};tick()},
+    cc:p=>`<b>En CapCut:</b> Texto → Subtítulos automáticos. Elegí Open Sans ExtraBold 800, tamaño ~12, caja blanca (#FBFAF6) con texto #3D3D3D y resaltado de palabra activa en olive #7A8A59. Guardalo como plantilla de texto “LECI Subtítulos”.<br><b>Bloques:</b> máximo 4 palabras.`},
+};
+
+/* motor de escenario */
+function makeStage(host,fmt){
+  const st=host.classList.contains('stage')?host:Object.assign(document.createElement('div'),{className:'stage'});
+  if(st!==host)host.appendChild(st);
+  st.innerHTML='<div class="stage-inner"></div><div class="safe"><i style="left:0;right:0;top:0;height:250px"></i><span style="left:20px;top:200px">USUARIO / CÁMARA</span><i style="left:0;right:0;bottom:0;height:420px"></i><span style="left:20px;bottom:360px">CAPTION / CTA</span><i style="right:0;top:250px;bottom:420px;width:150px"></i></div>';
+  const o={el:st,inner:st.firstChild,safe:st.lastChild,fmt:null,scene:null,p:null,bg:'crema',k:1,upload:null};
+  o.setFmt=f=>{o.fmt=f;const [w,h,c]=FMT[f];st.style.aspectRatio=`${w}/${h}`;Object.assign(o.inner.style,{width:w+'px',height:h+'px'});
+    o.inner.className='stage-inner '+c;o.safe.style.width=w+'px';o.safe.style.height=h+'px';o.safe.style.transformOrigin='0 0';st.classList.toggle('is916',f==='9:16');o.fit()};
+  o.fit=()=>{if(!o.fmt||!st.clientWidth)return;const s=st.clientWidth/FMT[o.fmt][0];o.inner.style.transform=`scale(${s})`;o.safe.style.transform=`scale(${s})`};
+  new ResizeObserver(o.fit).observe(st);
+  o.play=(key,p,bg,{k=1,stat=false,sound=false}={})=>{
+    const sc=S[key];o.scene=key;o.p=p;o.bg=bg;o.k=k;o.inner._gen=(o.inner._gen||0)+1;const gen=o.inner._gen;
+    const bgHtml=bg==='upload'&&o.upload?(o.upload.type.startsWith('video')?`<div class="bg bg-upload"><video src="${o.upload.url}" autoplay muted loop playsinline></video></div>`:`<div class="bg bg-upload" style="background-image:url(${o.upload.url})"></div>`):`<div class="bg bg-${bg==='upload'?'foto':bg}"></div>`;
+    o.inner.classList.remove('lt','dk','static');[...o.inner.classList].filter(c=>c.startsWith('bgn-')).forEach(c=>o.inner.classList.remove(c));
+    o.inner.classList.add(DARK[bg]?'dk':'lt','bgn-'+bg);if(stat)o.inner.classList.add('static');o.inner.style.setProperty('--k',k);
+    o.inner.innerHTML=bgHtml+sc.r(p,bg);
+    o.inner.querySelectorAll('[data-count]').forEach(el=>countUp(el,+el.dataset.count,+el.dataset.dec,(+el.dataset.delay||200)*k,1300*k,stat,()=>o.inner._gen===gen));
+    sc.after&&!stat?sc.after(o.inner,p,k,gen):sc.after&&stat&&sc.after(o.inner,p,0.001,gen);
+    if(sound&&sc.sound)sonic(k);
+  };
+  return o;
+}
+function countUp(el,to,dec,delay,dur,stat,alive){
+  if(stat){el.textContent=nf(to,dec);return}
+  const t0=performance.now()+delay;const f=t=>{if(!alive())return;let q=Math.min(Math.max((t-t0)/dur,0),1);q=1-Math.pow(1-q,4);el.textContent=nf(to*q,dec);if(q<1)requestAnimationFrame(f)};requestAnimationFrame(f);
+}
+const defaults=key=>Object.fromEntries(S[key].f.map(f=>[f[0],f[2]]));
+/* ritmo base LECI y specs con tiempos ajustados al ritmo */
+const BASE_K=1.25;
+const timed=(html,k)=>html.replace(/(\d+(?:,\d+)?) s\b/g,(m,x)=>{const v=parseFloat(x.replace(',','.'))*k,r=v>=1?Math.round(v*10)/10:Math.round(v*100)/100;return r.toLocaleString('es-AR',{maximumFractionDigits:2})+' s'});
+
+/* demos en secciones */
+const demos=[];
+$$('.demo[data-scene]').forEach(d=>{
+  const key=d.dataset.scene,bg=d.dataset.bg||S[key].bg,fmt=d.dataset.fmt||S[key].fmt,k=+(d.dataset.k||BASE_K),stat=!!d.dataset.static;
+  const p=Object.assign(defaults(key),d.dataset.p?JSON.parse(d.dataset.p):{});
+  d.innerHTML=`<div class="demo-head"><span class="demo-name">${esc(d.dataset.title||S[key].n)}</span><span class="demo-actions"><button class="icon-btn" title="Repetir" data-a="replay">↻</button><button class="icon-btn" title="Abrir en el Estudio" data-a="studio">↗</button></span></div><div class="host"></div>${S[key].cc&&!stat?`<details class="capcut"><summary>Cómo hacerlo en CapCut</summary><div>${timed(S[key].cc(p),BASE_K)}</div></details>`:''}`;
+  const o=makeStage(d.querySelector('.host'),fmt);o.setFmt(fmt);if(d.dataset.safe)o.el.classList.add('show-safe');
+  const run=()=>o.play(key,p,bg,{k,stat});
+  if(stat)run();else o.inner.innerHTML=`<div class="bg bg-${bg}"></div>`;
+  d.querySelector('[data-a=replay]').onclick=run;
+  d.querySelector('[data-a=studio]').onclick=()=>openStudio(key,p,bg,fmt);
+  demos.push({d,run,stat,done:stat});
+});
+const io=new IntersectionObserver(es=>es.forEach(e=>{const m=demos.find(x=>x.d===e.target);if(e.isIntersecting&&m&&!m.done){m.done=true;setTimeout(m.run,150)}}),{threshold:.45});
+demos.forEach(m=>io.observe(m.d));
+
+/* ─── tipografía: probador ─── */
+const FF={accent:"'Bricolage Grotesque'",body:"'Open Sans'",mono:"'Space Mono'"};
+function tUpd(){const f=$('#tFont').value,w=+$('#tW').value,l=+$('#tL').value,s=+$('#tS').value,o=$('#tOut');
+  $('#tWv').textContent=w;$('#tLv').textContent=(l>0?'+':l<0?'−':'')+Math.abs(l)+'%';$('#tSv').textContent=s;
+  Object.assign(o.style,{fontFamily:FF[f],fontWeight:w,letterSpacing:l/100+'em',fontSize:s+'px',lineHeight:s>40?.95:1.3});o.textContent=$('#tText').value;
+  $('#tCss').textContent=`font: ${w} ${s}px/${s>40?.95:1.3} ${FF[f]}; letter-spacing: ${l/100}em;`}
+['tText','tFont','tW','tL','tS'].forEach(id=>$('#'+id).addEventListener('input',tUpd));tUpd();
+
+/* ─── motion: curvas y duraciones ─── */
+const CURVES=[['Suave','.22,1,.36,1','Entradas de texto y elementos. Arranca rápido y frena largo.','--ease-suave'],['Preciso','.65,0,.35,1','Transiciones, wipes, resaltados y líneas que se dibujan.','--ease-preciso'],['Acento','.34,1.56,.64,1','Solo pops: stickers, etiquetas y el punto del logo.','--ease-acento'],['Salida','.55,0,1,.45','Elementos que se van. Más corta que la entrada.','--ease-salida']];
+$('#curves').innerHTML=CURVES.map(([n,v,d,t])=>{const [a,b,c,e]=v.split(',').map(Number),P=x=>8+x*124,Q=y=>132-y*110;
+  return `<div class="curve-card" data-ease="${v}"><svg viewBox="0 0 140 150"><rect x="8" y="22" width="124" height="110" fill="none" stroke="currentColor" stroke-opacity=".12"/><line x1="${P(0)}" y1="${Q(0)}" x2="${P(a)}" y2="${Q(b)}" stroke="#9C4A63" stroke-opacity=".5"/><line x1="${P(1)}" y1="${Q(1)}" x2="${P(c)}" y2="${Q(e)}" stroke="#9C4A63" stroke-opacity=".5"/><path d="M${P(0)} ${Q(0)} C${P(a)} ${Q(b)} ${P(c)} ${Q(e)} ${P(1)} ${Q(1)}" fill="none" stroke="#7A8A59" stroke-width="3"/><circle cx="${P(a)}" cy="${Q(b)}" r="3" fill="#9C4A63"/><circle cx="${P(c)}" cy="${Q(e)}" r="3" fill="#9C4A63"/></svg><div class="track"><span class="ball"></span></div><h5>${n}</h5><code>cubic-bezier(${v})</code><p>${d}</p></div>`}).join('');
+$$('.curve-card').forEach(c=>c.onclick=()=>{const b=c.querySelector('.ball'),w=c.querySelector('.track').clientWidth-14;b.animate([{transform:'translateX(0)'},{transform:`translateX(${w}px)`}],{duration:900,easing:`cubic-bezier(${c.dataset.ease})`,fill:'forwards'})});
+const DUR=[['--d-micro',190,'Hover, toques, ticks'],['--d-ui',375,'Fades, salidas, cambios de estado'],['--d-entrada',875,'Textos, notas, etiquetas'],['--d-grafico',1250,'Barras, placas, logo'],['--d-dato',1750,'Contadores, líneas que se dibujan']];
+$('#durs').innerHTML=DUR.map(([t,ms,u])=>`<div class="dur-row"><code>${t}</code><b>${ms} ms</b><div class="dur-bar"><i data-ms="${ms}"></i></div><span>${u}</span></div>`).join('');
+new IntersectionObserver((es,ob)=>es.forEach(e=>{if(e.isIntersecting){$$('.dur-bar i').forEach(i=>i.animate([{width:'0%'},{width:'100%'}],{duration:+i.dataset.ms*(1),easing:'cubic-bezier(.22,1,.36,1)',fill:'forwards',delay:200}));ob.disconnect()}}),{threshold:.5}).observe($('#durs'));
+
+/* ─── hooks ─── */
+const HOOKS=[
+  ['Error / confesión','Mi error','más caro','manejando campañas','Mi error + [más caro / que casi me cuesta un cliente] + [tema]','Genera curiosidad y humaniza. Ideal para reels a cámara.','note',{eye:'Mi error',key:'más caro',post:'manejando campañas',tag:'Y fue por esto…'}],
+  ['Lista numerada','Te explico los','3 tipos','de campañas en Meta','Te explico los + [N] [cosas] + de [tema]','Promete algo concreto y cerrado. Funciona en carruseles.','hook',{eyebrow:'Meta Ads',pre:'Te explico los',key:'3 tipos',post:'de campañas en Meta.',tag:'Y cuándo conviene cada una.',hl:'no'}],
+  ['Pregunta directa','¿Cada cuánto','tengo que publicar?','','¿[Pregunta que tu cliente se hace en voz baja]?','La pregunta exacta que te hacen en las reuniones.','hook',{eyebrow:'Contenido',pre:'¿Cada cuánto',key:'tengo que publicar?',post:'',tag:'',hl:'no'}],
+  ['Mitos','5 mitos del marketing','que te están frenando','','[N] mitos de [tema] + que te están [frenando / costando plata]','Pone en tensión lo que el cliente cree. Bueno para guardar.','hook',{eyebrow:'Marketing digital',pre:'5 mitos del marketing digital',key:'que te están frenando',post:'',tag:'',hl:'si'}],
+  ['Resultado / caso','Este negocio','triplicó ventas','en un mes.','Este negocio + [resultado concreto] + en [tiempo]','El dato adelante. Después se cuenta cómo. Siempre con datos reales.','hook',{eyebrow:'Caso de éxito',pre:'Este negocio',key:'triplicó ventas',post:'en un mes.',tag:'Y así lo conseguimos.',hl:'no'}],
+  ['Contraste / antes de','Tu tienda online necesita estar','optimizada ANTES','de pautar','Tu [cosa] necesita [estado] + ANTES de + [acción]','Corrige un orden. Posiciona a LECI como estratega.','hook',{eyebrow:'E-commerce',pre:'Tu tienda online necesita estar',key:'optimizada ANTES',post:'de pautar.',tag:'',hl:'si'}],
+  ['Definición','¿Qué es el ROAS','y por qué debería importarte?','','¿Qué es [concepto] + y por qué [te importa]?','Educación simple. Construye autoridad sin vender.','hook',{eyebrow:'Glosario',pre:'¿Qué es el ROAS',key:'y por qué debería importarte?',post:'',tag:'',hl:'no'}],
+  ['Fecha','Día de la','madre.','¿Tu negocio aprovechó esta fecha?','[Fecha] + ¿tu negocio [aprovechó / está listo para] esto?','Oportunidad estacional. Fondo de papel cuadriculado.','hook',{eyebrow:'18 · Octubre',pre:'Día de la',key:'madre.',post:'¿Tu negocio aprovechó esta fecha?',tag:'',hl:'si'}],
+  ['Dato que duele','El 70% de los anuncios','muere en 3 segundos','','El [N]% de [algo] + [consecuencia fuerte]','Un número que incomoda. Usá solo datos que puedas sostener.','hook',{eyebrow:'Dato',pre:'El 70% de los anuncios',key:'muere en 3 segundos',post:'',tag:'¿El tuyo también?',hl:'no'}],
+];
+$('#hookCards').innerHTML=HOOKS.map((h,i)=>`<div class="hook-card"><span class="ty">${h[0]}</span><div class="ex"><span>${h[1]}</span> <b>${h[2]}</b> <span>${h[3]}</span></div><div class="fm">${h[4]}</div><p>${h[5]}</p><button class="btn" data-hook="${i}" style="align-self:flex-start">Usar en el Estudio ↗</button></div>`).join('');
+$$('[data-hook]').forEach(b=>b.onclick=()=>{const h=HOOKS[+b.dataset.hook];openStudio(h[6],Object.assign(defaults(h[6]),h[7]),h[6]==='note'?'foto':'crema','9:16')});
+
+/* ─── portadas: feed ─── */
+const FEED=[['hook','crema',HOOKS[1][7]],['note','foto',HOOKS[0][7]],['hook','olive',HOOKS[4][7]],['hook','foto',HOOKS[6][7]],['hook','crema',HOOKS[3][7]],['hook','olive',HOOKS[2][7]],['hook','papel',HOOKS[7][7]],['hook','foto',HOOKS[5][7]],['hook','crema',HOOKS[8][7]]];
+const feedStages=FEED.map(([k,bg,p])=>{const c=document.createElement('div');c.className='cell';$('#feed').appendChild(c);const o=makeStage(c,'9:16');o.setFmt('9:16');o.play(k,Object.assign(defaults(k),p),bg,{stat:true});return o});
+$('#feedToggle').onclick=e=>{const f=$('#feed');f.classList.toggle('full');e.target.textContent=f.classList.contains('full')?'Ver como grilla 3:4':'Ver portada completa 9:16';feedStages.forEach(o=>o.fit())};
+
+/* ─── sonido ─── */
+let AC;
+function sonic(k=1){try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();const t=AC.currentTime+.05;
+  const n=(f,at,dur,g,type='sine')=>{const o=AC.createOscillator(),v=AC.createGain();o.type=type;o.frequency.value=f;v.gain.setValueAtTime(0,t+at);v.gain.linearRampToValueAtTime(g,t+at+.02);v.gain.exponentialRampToValueAtTime(.0001,t+at+dur);o.connect(v).connect(AC.destination);o.start(t+at);o.stop(t+at+dur+.05)};
+  n(392,0,1.1,.18);n(196,0,1.1,.08);n(587.3,.35*k,1,.14);n(1174.7,1.15*k,.9,.12);n(1568,1.15*k,.6,.05,'triangle');
+  const bars=$$('#wave i');[0,.35*k,1.15*k].forEach((at,j)=>setTimeout(()=>bars.forEach((b,i)=>{b.style.height=(20+Math.random()*80*(j===2?1:.7))+'%';setTimeout(()=>b.style.height='20%',380)}),at*1000))}catch(e){}}
+$('#wave').innerHTML='<i></i>'.repeat(36);
+$('#playSonic').onclick=()=>{const s=$('.sound-card .iso');s.outerHTML=iso('cream',true,0).replace('class="iso',`style="width:90px;--k:${BASE_K}" class="iso`);sonic(BASE_K)};
+
+/* ─── estudio ─── */
+const studio=makeStage($('#studioStage'),'9:16');const full=makeStage($('#fullStage'),'9:16');
+$('#sScene').innerHTML=Object.entries(S).map(([k,s])=>`<option value="${k}">${s.n}</option>`).join('');
+let sp={};
+function buildFields(key,p){sp=Object.assign(defaults(key),p||{});
+  $('#sFields').innerHTML=S[key].f.map(([id,lab,def,opts])=>opts?`<label>${lab}<select data-f="${id}">${opts.map(o=>`<option ${sp[id]===o?'selected':''}>${o}</option>`).join('')}</select></label>`:`<label>${lab}<input type="text" data-f="${id}" value="${esc(sp[id])}"></label>`).join('');
+  $$('#sFields [data-f]').forEach(i=>i.addEventListener('input',()=>{sp[i.dataset.f]=i.value;clearTimeout(i._t);i._t=setTimeout(sPlay,350)}));
+  $('#sCap').innerHTML=S[key].cc?timed(S[key].cc(sp),+$('#sK').value)+'<br><br><b>Superponer en CapCut:</b> importá el video grabado con chroma azul → arrastralo como Superposición encima de tu clip → Eliminar fondo → Croma → tocá el azul con el cuentagotas → Intensidad ~20, Sombra ~10.':''}
+function sPlay(){const key=$('#sScene').value,bg=$('#sBg').value,k=+$('#sK').value;studio.play(key,sp,bg,{k,sound:$('#sSound').checked});}
+function setStudioFmt(f){studio.setFmt(f);$('#studioStage').classList.toggle('w169',f==='16:9')}
+function openStudio(key,p,bg,fmt){$('#sScene').value=key;$('#sBg').value=bg||S[key].bg;$('#sFmt').value=fmt||S[key].fmt;setStudioFmt($('#sFmt').value);buildFields(key,p);$('#estudio').scrollIntoView({behavior:'smooth'});setTimeout(sPlay,700)}
+$('#sScene').onchange=()=>{const k=$('#sScene').value;$('#sFmt').value=S[k].fmt;$('#sBg').value=S[k].bg;setStudioFmt(S[k].fmt);buildFields(k);sPlay()};
+$('#sFmt').onchange=()=>{setStudioFmt($('#sFmt').value);sPlay()};
+$('#sK').onchange=()=>{buildFields($('#sScene').value,sp);sPlay()};
+$('#sBg').onchange=()=>{if($('#sBg').value==='upload'&&!studio.upload){$('#sFile').click();return}if($('#sBg').value==='verde')toast('Ojo: el chroma verde puede borrar los olive. Mejor azul.',3600);sPlay()};
+$('#sFile').onchange=e=>{const f=e.target.files[0];if(!f)return;const u={url:URL.createObjectURL(f),type:f.type};studio.upload=u;full.upload=u;sPlay()};
+$('#sSafe').onchange=()=>$('#studioStage').classList.toggle('show-safe',$('#sSafe').checked);
+$('#sPlay').onclick=sPlay;
+setStudioFmt('9:16');buildFields('hook');setTimeout(()=>studio.play('hook',sp,'crema',{stat:true}),50);
+
+/* pantalla completa (para OBS) */
+const fw=$('#fullWrap');let hintT;
+function fitFull(){const [w,h]=FMT[$('#sFmt').value],s=Math.min(innerWidth/w,innerHeight/h);Object.assign($('#fullStage').style,{width:w*s+'px',height:h*s+'px'});full.fit()}
+function fullPlay(){full.play($('#sScene').value,sp,$('#sBg').value,{k:+$('#sK').value,sound:$('#sSound').checked});$('#fullHint').style.opacity=0}
+$('#sFull').onclick=async()=>{full.setFmt($('#sFmt').value);fw.classList.add('on');try{await fw.requestFullscreen()}catch(e){}fitFull();
+  full.inner.innerHTML=`<div class="bg bg-${$('#sBg').value==='upload'?'foto':$('#sBg').value}"></div>`;$('#fullHint').style.opacity=1};
+document.addEventListener('fullscreenchange',()=>{if(!document.fullscreenElement)fw.classList.remove('on');else fitFull()});
+addEventListener('resize',()=>fw.classList.contains('on')&&fitFull());
+addEventListener('keydown',e=>{if(!fw.classList.contains('on'))return;if(e.code==='Space'||e.key==='r'||e.key==='R'){e.preventDefault();fullPlay()}if(e.key==='Escape'){fw.classList.remove('on')}});
+
+/* grabación de la pestaña recortada al escenario */
+$('#sRec').onclick=async()=>{
+  if(!navigator.mediaDevices?.getDisplayMedia||!window.MediaRecorder){toast('Tu navegador no permite grabar. Usá la opción B (OBS).',4000);return}
+  let stream;try{stream=await navigator.mediaDevices.getDisplayMedia({video:{frameRate:60},audio:false,preferCurrentTab:true,selfBrowserSurface:'include'})}catch(e){toast('Grabación cancelada.');return}
+  const track=stream.getVideoTracks()[0];
+  if(window.CropTarget&&track.cropTo){try{await track.cropTo(await CropTarget.fromElement($('#studioStage')))}catch(e){}}else toast('Tu Chrome no recorta: se grabará la pestaña entera.',3500);
+  const mime=['video/mp4;codecs=avc1','video/mp4','video/webm;codecs=vp9','video/webm'].find(m=>MediaRecorder.isTypeSupported(m));
+  const rec=new MediaRecorder(stream,{mimeType:mime,videoBitsPerSecond:16e6}),chunks=[];
+  rec.ondataavailable=e=>e.data.size&&chunks.push(e.data);
+  rec.onstop=()=>{const ext=mime.includes('mp4')?'mp4':'webm',a=document.createElement('a');a.href=URL.createObjectURL(new Blob(chunks,{type:mime}));a.download=`LECI-${$('#sScene').value}-${$('#sFmt').value.replace(':','x')}.${ext}`;a.click();toast('Video descargado ('+ext.toUpperCase()+')')};
+  const safe=$('#studioStage').classList.contains('show-safe');$('#studioStage').classList.remove('show-safe');
+  studio.inner.innerHTML=`<div class="bg bg-${$('#sBg').value==='upload'?'foto':$('#sBg').value}"></div>`;
+  await sleep(500);rec.start();await sleep(250);sPlay();
+  await sleep(S[$('#sScene').value].dur*(+$('#sK').value)+900);rec.stop();track.stop();if(safe)$('#studioStage').classList.add('show-safe');
+};
+
+/* ─── portada ─── */
+function replayCover(){const s=$('.cover-logo svg');s.classList.remove('anim');void s.getBBox();s.classList.add('anim');sonic(BASE_K)}
+
+/* ─── grafismo ─── */
+$('#linePattern').innerHTML=[30,55,40,75,60,85,70,90,80,100].map((h,i)=>`<i style="height:${h}%;${i<4?`opacity:${.3+i*.15}`:''}${i===9?';background:var(--plum)':''}"></i>`).join('');
+$('#dotGrid').innerHTML=Array.from({length:32},(_,i)=>`<i class="${i===21?'p':[0,1,3,6,9,10,15,16,19,25,27,28].includes(i)?'on':[12,18,30].includes(i)?'mid':''}"></i>`).join('');
+
+/* ─── perfil de Instagram ─── */
+$('#igHl').innerHTML=[['leci','LECI'],['casos','Casos'],['tips','Tips'],['servicios','Servicios'],['resenas','Reseñas']].map(([k,n],i)=>`<figure><img src="destacadas/LECI-destacada-${k}-${i%2?'crema':'olive'}.png" alt=""><figcaption>${n}</figcaption></figure>`).join('');
+
+/* ─── descargas ─── */
+const VF=['16x9-crema','16x9-negro','16x9-olive','16x9-azul','9x16-crema','9x16-olive','9x16-negro','1x1-crema'];
+const DL=[
+  {t:'Logos',dir:'logos',d:'Vectoriales originales sin rosa. SVG para web e impresión, PNG transparente para todo lo demás.',img:'logos/LECI-logo-estudio.png',
+   f:['LECI-logo-estudio','LECI-logo-estudio-reverso','LECI-wordmark','LECI-wordmark-reverso','LECI-isotipo','LECI-isotipo-reverso'].flatMap(n=>[n+'.svg',n+'.png'])},
+  {t:'Video · LECI Estudio',dir:'video/logo-leci-estudio',d:'Logo animado con logo sonoro. MP4 60 fps.',vid:'video/logo-leci-estudio/LECI-logo-16x9-olive.mp4',f:VF.map(v=>`LECI-logo-${v}.mp4`)},
+  {t:'Video · Isotipo + tagline',dir:'video/isotipo-con-tagline',d:'Isotipo animado con el tagline. MP4 60 fps.',vid:'video/isotipo-con-tagline/LECI-isotipo-16x9-olive.mp4',f:VF.map(v=>`LECI-isotipo-${v}.mp4`)},
+  {t:'Exportador de video',dir:'video',d:'Abrilo en Chrome para generar otra combinación de versión, formato y fondo.',f:['LECI Logo en video.html']},
+  {t:'Sonido',dir:'sonido',d:'Logo sonoro y efectos en WAV, listos para CapCut.',audio:'sonido/LECI-logo-sonoro.wav',f:['LECI-logo-sonoro.wav','LECI-efecto-pop.wav','LECI-efecto-tick.wav','LECI-efecto-whoosh.wav']},
+  {t:'Color · LUT',dir:'color',d:'Look LECI cálido para CapCut de PC: Ajustar → LUT → Importar.',f:['LECI-calido.cube']},
+  {t:'Fondos',dir:'fondos',d:'1080×1920 y 1920×1080, más textura de grano.',thumbs:1,f:['fondo-olive','fondo-crema','fondo-negro','fondo-papel','fondo-ciruela','textura-grano','fondo-olive-16x9','fondo-papel-16x9'].map(n=>`LECI-${n}.png`)},
+  {t:'Stickers',dir:'stickers',d:'PNG transparente para Stories y Reels.',thumbs:1,checker:1,f:['nota-con-clip','clip','etiqueta-blanca','etiqueta-asi-lo-conseguimos','etiqueta-fue-por-esto','etiqueta-caso-real','etiqueta-nuevo','etiqueta-tip','sello-caso-real-oscuro','sello-caso-real-claro','sello-vacio-oscuro','sello-vacio-claro','flecha-curva-oscura','flecha-curva-clara','flecha-larga-oscura','flecha-larga-clara','circulo-marcador-ciruela','circulo-marcador-claro','chip-desliza','chip-link-en-bio'].map(n=>`LECI-${n}.png`)},
+  {t:'Destacadas y perfil',dir:'destacadas',d:'Portadas de destacadas 1080×1080 y foto de perfil.',thumbs:1,f:[...['leci','casos','tips','servicios','resenas','resultados','contacto','contenido'].flatMap(k=>[`LECI-destacada-${k}-olive.png`,`LECI-destacada-${k}-crema.png`]),'LECI-perfil-olive.png','LECI-perfil-crema.png']},
+];
+const href=(dir,f)=>encodeURI(`${dir}/${f}`);
+$('#dl').innerHTML=DL.map(g=>`<div class="dl">
+  <div class="dl-head">${g.img?`<img class="dl-prev" src="${g.img}" alt="">`:g.vid?`<video class="dl-prev" src="${g.vid}" muted loop autoplay playsinline></video>`:''}
+    <div><h3>${g.t} <span>${g.f.length} archivo${g.f.length>1?'s':''}</span></h3><p>${g.d}</p><code>branding/${g.dir}</code>${g.audio?`<audio controls src="${g.audio}"></audio>`:''}</div></div>
+  ${g.thumbs?`<div class="dl-thumbs${g.checker?' checker':''}">${g.f.map(f=>`<a href="${href(g.dir,f)}" title="${f}"><img src="${href(g.dir,f)}" alt="${f}" loading="lazy"></a>`).join('')}</div>`
+    :`<div class="dl-files">${g.f.map(f=>`<a href="${href(g.dir,f)}">${f}</a>`).join('')}</div>`}</div>`).join('');
+
+/* nav activa */
+const navObs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)$$('.nav-item').forEach(n=>n.classList.toggle('active',n.getAttribute('href')==='#'+e.target.id))}),{threshold:.25});
+$$('main section').forEach(s=>navObs.observe(s));
+</script>
+</body>
+</html>
